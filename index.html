@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#f8f7f3" />
+  <meta name="description" content="İspanyolca 001 ve İspanyolca 002 derslerine Türkçe açıklamalı çalışma sitesi: konu anlatımları, fiil çekimleri, kelimeler, alıştırmalar ve metne aktarılmış ders defteri." />
+  <title>HOLA · İspanyolca 001 + 002 Çalışma Atlası</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar" id="sidebar" aria-label="Ders gezinme menüsü">
+      <div class="sidebar-top">
+        <a class="brand" href="#/home" aria-label="Ana sayfa"><span class="brand-mark">¡</span><span>HOLA<span class="brand-dot">.</span><small>İSPANYOLCA ATLASI</small></span></a>
+        <button class="icon-btn mobile-close" id="close-menu" title="Menüyü kapat" aria-label="Menüyü kapat">×</button>
+      </div>
+      <div class="search-wrap"><span class="search-symbol">⌕</span><input type="search" id="global-search" placeholder="Konu, fiil, kelime ara…" autocomplete="off" aria-label="Tüm içerikte ara" /><kbd>/</kbd></div>
+      <nav class="primary-nav" aria-label="Ana bölümler">
+        <a data-nav="home" href="#/home"><span>▦</span> Genel bakış</a>
+        <a data-nav="courses" href="#/courses"><span>▤</span> Ders anlatımları</a>
+        <a data-nav="verbs" href="#/verbs"><span>≡</span> Fiil çekimleri</a>
+        <a data-nav="vocab" href="#/vocab"><span>◈</span> Kelime sözlüğü</a>
+        <a data-nav="practice" href="#/practice"><span>◎</span> Test merkezi</a>
+        <a data-nav="writing" href="#/writing"><span>✎</span> Yazma çalışması</a>
+        <a data-nav="notes" href="#/notes"><span>▧</span> Defter notları</a>
+      </nav>
+      <div class="sidebar-section-label"><span>DERS HARİTASI</span><span id="sidebar-progress">0/34</span></div>
+      <div class="course-toggle" role="group" aria-label="Kurs filtresi">
+        <button data-course="001">001</button><button data-course="002">002</button><button data-course="all">Hepsi</button>
+      </div>
+      <div id="lesson-nav" class="lesson-nav"></div>
+      <div class="sidebar-foot"><span class="sidebar-foot-dot"></span> Çevrimdışı çalışır · İlerleme bu tarayıcıda kalır</div>
+    </aside>
+    <div class="mobile-backdrop" id="mobile-backdrop"></div>
+    <div class="page-column">
+      <header class="topbar"><button id="open-menu" class="icon-btn menu-button" aria-label="Menüyü aç">☰</button><span class="topbar-subtitle">İSPANYOLCA 001 + 002 <span class="topbar-separator">/</span> A1 ÇALIŞMA ALANI</span><div class="topbar-right"><span id="status-text" class="status-text">Hazır</span><button class="icon-btn theme-button" id="theme-toggle" title="Renk temasını değiştir" aria-label="Renk temasını değiştir">◐</button></div></header>
+      <main id="app" tabindex="-1"><div class="loading">Dersler yükleniyor…</div></main>
+      <footer class="footer">Özgün Türkçe anlatımlar · Kaynak: kullanıcı notları, Nuevo Prisma A1 ve 002 haftalık sunumları · Sesli etkinlikler dahil değildir.</footer>
+    </div>
+  </div>
+  <script defer src="./data.js"></script>
+  <script defer src="./app.js"></script>
+</body>
+</html>

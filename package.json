@@ -1,0 +1,10 @@
+{
+  "name": "spanish",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/site.test.mjs",
+    "build": "node scripts/build.mjs",
+    "start": "node scripts/build.mjs && python3 -m http.server -d dist 8000"
+  }
+}
