@@ -8,10 +8,21 @@ import vm from 'node:vm';
 const root = path.resolve(import.meta.dirname, '..');
 const dataPath = path.join(root, 'content.js');
 const notebookPath = path.join(root, 'notebook.js');
+const slidesPath = path.join(root, 'slides.js');
+
+function checkBlocks(entry) {
+  assert.ok(entry.title && entry.summary && entry.blocks.length, entry.id);
+  for (const b of entry.blocks) {
+    if (b.t === 'note') { assert.ok(b.text, entry.id); continue; }
+    assert.ok(['pairs', 'rules', 'table'].includes(b.t) && b.h && b.rows.length, `${entry.id}: ${b.h}`);
+    const width = b.t === 'table' ? b.head.length : 2;
+    for (const r of b.rows) assert.equal(r.length, width, `${entry.id}: ${b.h}: ${r.join(' | ')}`);
+  }
+}
 const htmlPath = path.join(root, 'index.html');
 
 test('site source files exist and no notebook photos are shipped', () => {
-  for (const f of [htmlPath, dataPath, notebookPath, path.join(root, 'app.js'), path.join(root, 'styles.css')]) assert.ok(existsSync(f), f);
+  for (const f of [htmlPath, dataPath, notebookPath, slidesPath, path.join(root, 'app.js'), path.join(root, 'styles.css')]) assert.ok(existsSync(f), f);
   assert.ok(!existsSync(path.join(root, 'assets/photos')));
   for (const f of ['index.html', 'app.js', 'styles.css']) assert.ok(!/assets\/photos|\.jpg\b/.test(readFileSync(path.join(root, f), 'utf8')), f);
 });
@@ -44,20 +55,23 @@ test('notebook transcription covers the notebook pages and is well formed', asyn
   for (let p = 2; p <= 54; p++) if (p !== 43) assert.ok(pages.has(p), `page ${p} not transcribed`);
   for (const n of notebook) {
     assert.ok(['001', '002'].includes(n.course), n.id);
-    assert.ok(n.title && n.summary && n.blocks.length, n.id);
-    for (const b of n.blocks) {
-      if (b.t === 'note') { assert.ok(b.text, n.id); continue; }
-      assert.ok(['pairs', 'rules', 'table'].includes(b.t) && b.h && b.rows.length, `${n.id}: ${b.h}`);
-      const width = b.t === 'table' ? b.head.length : 2;
-      for (const r of b.rows) assert.equal(r.length, width, `${n.id}: ${b.h}: ${r.join(' | ')}`);
-    }
+    checkBlocks(n);
   }
   for (const l of lessons) for (const p of l.pages) assert.ok(pages.has(p) || p === 43, `${l.id} cites page ${p}`);
 });
 
+test('slide notes cover all seven weeks of 002 and are well formed', async () => {
+  const {slides} = await import(slidesPath);
+  const {notebook} = await import(notebookPath);
+  const ids = [...slides, ...notebook].map(n => n.id);
+  assert.equal(new Set(ids).size, ids.length);
+  for (let w = 1; w <= 7; w++) assert.ok(slides.some(n => n.week === w), `week ${w}`);
+  for (const n of slides) { assert.equal(n.course, '002'); checkBlocks(n); }
+});
+
 test('interface has navigation, quiz, conjugations and notebook notes', () => {
   const html = readFileSync(htmlPath, 'utf8');
-  for (const label of ['İspanyolca 001', 'İspanyolca 002', 'Fiil çekimleri', 'Kelime', 'Test', 'Defter notları', 'Yazma']) assert.ok(html.includes(label), label);
+  for (const label of ['İspanyolca 001', 'İspanyolca 002', 'Fiil çekimleri', 'Kelime', 'Test', 'Defter notları', 'Slayt notları', 'Yazma']) assert.ok(html.includes(label), label);
   assert.ok(html.includes('id="app"'));
   assert.ok(html.includes('src="./data.js"'));
   assert.ok(!html.includes('http://') && !html.includes('https://'));
@@ -67,6 +81,6 @@ test('build produces a dist/ that loads in a browser-like context', () => {
   execFileSync(process.execPath, [path.join(root, 'scripts/build.mjs')], {cwd: root});
   for (const f of ['index.html', 'app.js', 'styles.css', 'data.js']) assert.ok(existsSync(path.join(root, 'dist', f)), f);
   const ctx = vm.createContext({});
-  vm.runInContext(readFileSync(path.join(root, 'dist/data.js'), 'utf8') + ';this.counts=[lessons.length,notebook.length,verbs.length];', ctx);
+  vm.runInContext(readFileSync(path.join(root, 'dist/data.js'), 'utf8') + ';this.counts=[lessons.length,notebook.length,slides.length,verbs.length];', ctx);
   assert.ok(ctx.counts.every(n => n > 0));
 });
