@@ -15,5 +15,5 @@ const asClassicScript = file => {
 rmSync(out, {recursive: true, force: true});
 mkdirSync(out);
 writeFileSync(path.join(out, 'data.js'), `"use strict";\n${asClassicScript('content.js')}\n${asClassicScript('notebook.js')}\n${asClassicScript('slides.js')}\n${asClassicScript('lessons-detail.js')}`);
-for (const file of ['index.html', 'app.js', 'styles.css']) copyFileSync(path.join(root, file), path.join(out, file));
+for (const file of ['index.html', 'app.js', 'styles.css', 'favicon.svg', 'apple-touch-icon.png']) copyFileSync(path.join(root, file), path.join(out, file));
 console.log(`Built ${path.relative(root, out)}/`);
