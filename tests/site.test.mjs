@@ -69,6 +69,22 @@ test('slide notes cover all seven weeks of 002 and are well formed', async () =>
   for (const n of slides) { assert.equal(n.course, '002'); checkBlocks(n); }
 });
 
+test('every lesson has a detailed explanation and valid linked notes', async () => {
+  const {lessons} = await import(dataPath);
+  const {lessonText, lessonSources} = await import(path.join(root, 'lessons-detail.js'));
+  const {notebook} = await import(notebookPath);
+  const {slides} = await import(slidesPath);
+  const ids = new Set([...notebook, ...slides].map(n => n.id));
+  for (const l of lessons) {
+    const text = lessonText[l.id];
+    assert.ok(Array.isArray(text) && text.join(' ').length > 1200, `${l.id} explanation too short`);
+    for (const id of lessonSources[l.id] || []) assert.ok(ids.has(id), `${l.id} links missing note ${id}`);
+  }
+  for (const id of Object.keys(lessonText)) assert.ok(lessons.some(l => l.id === id), `unknown lesson ${id}`);
+  const linked = new Set(Object.values(lessonSources).flat());
+  for (const id of ids) assert.ok(linked.has(id), `note ${id} is not shown on any lesson page`);
+});
+
 test('interface has navigation, quiz, conjugations and notebook notes', () => {
   const html = readFileSync(htmlPath, 'utf8');
   for (const label of ['İspanyolca 001', 'İspanyolca 002', 'Fiil çekimleri', 'Kelime', 'Test', 'Defter notları', 'Slayt notları', 'Yazma']) assert.ok(html.includes(label), label);
@@ -79,7 +95,7 @@ test('interface has navigation, quiz, conjugations and notebook notes', () => {
 
 test('build produces a dist/ that loads in a browser-like context', () => {
   execFileSync(process.execPath, [path.join(root, 'scripts/build.mjs')], {cwd: root});
-  for (const f of ['index.html', 'app.js', 'styles.css', 'data.js']) assert.ok(existsSync(path.join(root, 'dist', f)), f);
+  for (const f of ['index.html', 'app.js', 'styles.css', 'data.js', 'favicon.svg', 'apple-touch-icon.png']) assert.ok(existsSync(path.join(root, 'dist', f)), f);
   const ctx = vm.createContext({});
   vm.runInContext(readFileSync(path.join(root, 'dist/data.js'), 'utf8') + ';this.counts=[lessons.length,notebook.length,slides.length,verbs.length];', ctx);
   assert.ok(ctx.counts.every(n => n > 0));

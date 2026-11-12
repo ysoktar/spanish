@@ -5,7 +5,7 @@
 
 Türkçe anlatımlı çalışma sitesi: [Siteyi aç](https://ysoktar.github.io/spanish/).
 
-- Kronolojik konu anlatımları (001 temelleri, 002'nin 7 haftası), çekim tabloları ve Türkçe örnekler.
+- Kronolojik konu anlatımları (001 temelleri, 002'nin 7 haftası): her derste adım adım anlatım, çekim tabloları, sık yapılan hatalar ve o konuya ait defter ve slayt örneklerinin tamamı.
 - **Defter notları:** ders defterinin 54 sayfası metne aktarıldı; kurallar, tablolar ve her cümlenin Türkçesi. Defterdeki hatalar düzeltildi ve “Dikkat” kutularında belirtildi. Fotoğraflar yayımlanmaz.
 - **Slayt notları:** “002 semana 1–7” sunumlarında olup defterde olmayan içerik: kültür kutuları (tapas, öğün saatleri), diyaloglar, ek fiil tabloları ve alıştırmaların cevap anahtarı.
 - Fiil çekimleri, kelime kartları, açıklamalı testler ve paragraf yazma alanı.
@@ -18,6 +18,7 @@ Türkçe anlatımlı çalışma sitesi: [Siteyi aç](https://ysoktar.github.io/s
 | `content.js` | Dersler, fiiller, kelimeler, sorular, yazma görevleri |
 | `notebook.js` | Defter notları (sayfa numaralarıyla) |
 | `slides.js` | Slayt notları (hafta numaralarıyla) |
+| `lessons-detail.js` | Derslerin ayrıntılı anlatımı ve her derse bağlı defter/slayt notları |
 | `app.js`, `index.html`, `styles.css` | Arayüz |
 | `scripts/build.mjs` | `dist/` klasörünü üretir; veri dosyalarını tarayıcı için `data.js` olarak birleştirir |
 | `tests/site.test.mjs` | İçerik ve derleme testleri |
