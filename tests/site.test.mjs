@@ -85,6 +85,7 @@ test('every lesson has a detailed explanation and valid linked notes', async () 
       if (!x.startsWith('|')) { cols = 0; continue; }
       assert.ok(x.endsWith('|'), `${l.id}: broken table row ${x}`);
       const n = x.slice(1, -1).split('|').length;
+      if (cols) assert.ok(!/^\|\s*(Şahıs|Fiil)\s*\|/.test(x), `${l.id}: header row inside a table (two tables merged?): ${x}`);
       if (!cols) cols = n; else assert.equal(n, cols, `${l.id}: table row has ${n} columns, expected ${cols}: ${x}`);
     }
     for (const id of lessonSources[l.id] || []) assert.ok(ids.has(id), `${l.id} links missing note ${id}`);
@@ -106,9 +107,9 @@ test('irregular parts and endings are marked correctly', () => {
     ['jugar', 'pres', 0, 'juego', 'j[ue]g(o)'], ['pedir', 'pres', 0, 'pido', 'p[i]d(o)'],
     ['conocer', 'pres', 0, 'conozco', 'cono[z]c(o)'], ['ser', 'pres', 0, 'soy', '[soy]'],
     ['ir', 'pres', 3, 'vamos', '[vamos]'], ['saber', 'pres', 0, 'sé', '[sé]'],
-    ['acostarse', 'pres', 0, 'me acuesto', 'me ac[ue]st(o)'], ['leer', 'ger', 0, 'leyendo', 'le[y](endo)'],
+    ['acostarse', 'pres', 0, 'me acuesto', '{me} ac[ue]st(o)'], ['leer', 'ger', 0, 'leyendo', 'le[y](endo)'],
     ['hablar', 'imp', 2, 'hable', 'habl(e)'], ['tener', 'imp', 2, 'tenga', 'ten[g](a)'],
-    ['salir', 'imp', 0, 'sal', '[sal]'], ['ir', 'imp', 1, 'id', '(id)'],
+    ['salir', 'imp', 0, 'sal', '[sal]'], ['ser', 'imp', 0, 'sé', '[sé]'], ['ser', 'imp', 1, 'sed', 's(ed)'], ['decir', 'imp', 2, 'diga', 'd[ig](a)'], ['ir', 'imp', 1, 'id', '(id)'],
     ['levantarse', 'imp', 0, 'levántate', 'levánt(a){te}'], ['levantarse', 'imp', 1, 'levantaos', 'levant(a){os}'],
   ];
   for (const [l, m, i, f, want] of cases) assert.equal(short(l, m, i, f), want, `${l} ${f}`);
