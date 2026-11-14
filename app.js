@@ -53,7 +53,75 @@ function renderCourseList(){
  for(const l of shown){const title=groupTitle(l);let g=groups.find(x=>x.name===title);if(!g){g={name:title,lessons:[]};groups.push(g)}g.lessons.push(l)}
  return `<div class="eyebrow">KRONOLOJİK MÜFREDAT</div><h1>Ders anlatımları</h1><p class="lead">İspanyolca 001 temelini at, ardından İspanyolca 002'yi hafta hafta ilerle. Her konunun sonunda örnekler, çekimler, kaynak gösterimi ve ilgili defter notları var.</p><div class="button-row" style="margin:25px 0"><a class="btn ${filter==='all'?'primary':'ghost'} sm" href="#/courses?course=all">Tümü (${lessons.length})</a><a class="btn ${filter==='001'?'primary':'ghost'} sm" href="#/courses?course=001">001 (${lessonCount('001')})</a><a class="btn ${filter==='002'?'primary':'ghost'} sm" href="#/courses?course=002">002 (${lessonCount('002')})</a></div>${groups.map(g=>`<section class="week-group"><h3>${E(g.name)}</h3><div class="outline-list">${g.lessons.map(l=>`<a class="outline-card" href="${pathLink(l.id)}"><span class="outline-index">${completed.has(l.id)?'✓':String(lessons.indexOf(l)+1).padStart(2,'0')}</span><span class="outline-info"><strong>${E(l.title)}</strong><span>${E(l.subtitle)}</span></span><span class="outline-arrow">→</span></a>`).join('')}</div></section>`).join('')}`;
 }
+// Düzensiz kısmı bulma: çekimi, fiil düzenli olsaydı alacağı biçimle harf harf karşılaştırır.
+const IRR_END={pres:{ar:['o','as','a','amos','ais','an'],er:['o','es','e','emos','eis','en'],ir:['o','es','e','imos','is','en']},imp:{ar:['a','ad','e','en'],er:['e','ed','a','an'],ir:['e','id','a','an']}};
+const baseCh=c=>c==='ñ'||c==='Ñ'?'ñ':c.normalize('NFD')[0].toLowerCase();
+const isInf=w=>/^[a-záéíóúñ]*(ar|er|ir|ír)(se)?$/i.test(w||'');
+function regularForm(lemma,mode,i){
+ const refl=/(ar|er|ir|ír)se$/.test(lemma),base=refl?lemma.slice(0,-2):lemma,type=[...base.slice(-2)].map(baseCh).join(''),stem=base.slice(0,-2);
+ if(!IRR_END.pres[type])return null;
+ if(mode==='ger')return stem+(type==='ar'?'ando':'iendo')+(refl?'se':'');
+ let f=stem+IRR_END[mode][type][i];
+ if(mode==='imp'&&refl)f=i===1?f.slice(0,-1)+'os':f+(i===0?'te':'se');
+ return f;
+}
+function markIrregular(lemma,mode,i,form){
+ const raw=String(form??'');const bold=/^\*\*.*\*\*$/.test(raw);let f=bold?raw.slice(2,-2):raw;
+ const refl=/(ar|er|ir|ír)se$/.test(lemma);let pre='',post='';
+ if(refl&&mode==='pres'){const m=f.match(/^(me|te|se|nos|os) /);if(m){pre=m[0];f=f.slice(pre.length)}}
+ if(refl&&mode==='imp'){const m=f.match(/(te|os|se)$/);if(m&&f.length>m[0].length+1){post=m[0];f=f.slice(0,-post.length)}}
+ if(refl&&mode==='ger'){const m=f.match(/se$/);if(m){post='se';f=f.slice(0,-2)}}
+ const plain=lemma.replace(/se$/,refl?'':'se'===lemma.slice(-2)?'se':'');
+ let reg=regularForm(refl?lemma.slice(0,-2):lemma,mode,i);
+ const chars=[...f];
+ if(!reg||!f||/[ ,()…]/.test(f)){const h=E(pre)+E(f)+E(post);return bold?`<strong>${h}</strong>`:h}
+ if(mode==='imp'&&refl&&i===1&&reg.endsWith('d'))reg=reg.slice(0,-1);
+ const a=chars.map(baseCh),b=[...reg].map(baseCh);
+ // çekim eki: düzenli ekle (ya da gerundioda -ando/-iendo/-yendo ile) eşleşen son kısım
+ const type=[...(refl?lemma.slice(0,-4):lemma.slice(0,-2)),...''].length,base=refl?lemma.slice(0,-2):lemma,t=[...base.slice(-2)].map(baseCh).join('');
+ let ending=mode==='ger'?(a.join('').match(/(ando|iendo|yendo)$/)||[''])[0]:(IRR_END[mode][t]||[])[i]||'';
+ if(mode==='imp'&&refl&&i===1)ending=ending.replace(/d$/,'');
+ let endLen=ending&&a.join('').endsWith(ending)?ending.length:0;
+ // düzensiz kısım
+ let p=0;while(p<a.length&&p<b.length&&a[p]===b[p])p++;let q=0;while(q<a.length-p&&q<b.length-p&&a[a.length-1-q]===b[b.length-1-q])q++;
+ let st=p,en=chars.length-q;const regMid=b.length-p-q,stemless=/^(ser|ir|irse)$/.test(lemma);
+ if(en<=st&&regMid>0){st=0;en=chars.length}
+ if(en>st){
+  if(stemless||en-st>=Math.ceil(chars.length*0.6)||(regMid>=2&&(en-st)/chars.length>=0.5&&chars.length<=3)){st=0;en=chars.length}
+  else if(en-st===1&&/[iu]/.test(a[st])&&a[st+1]==='e'&&!(a[st]==='u'&&/[qg]/.test(a[st-1]||'')))en++;
+  else if(en-st===1&&a[st]==='e'&&/[iu]/.test(a[st-1]||'')&&!(a[st-1]==='u'&&/[qg]/.test(a[st-2]||'')))st--;
+ }
+ const irr=en>st;if(irr&&st===0&&en===chars.length)endLen=0;
+ let endStart=chars.length-endLen;if(irr&&endStart<en)endStart=en;
+ const seg=(x,y)=>E(chars.slice(x,y).join(''));
+ let h='';
+ if(irr){h=seg(0,Math.min(st,endStart))+`<mark class="irr">${seg(st,en)}</mark>`+seg(en,endStart)}else h=seg(0,endStart);
+ if(endStart<chars.length)h+=`<span class="end">${seg(endStart,chars.length)}</span>`;
+ h=E(pre)+h+(post?`<span class="pron">${E(post)}</span>`:'');
+ return bold?`<strong>${h}</strong>`:h;
+}
+// Tablo bir çekim tablosuysa zamanı ve hangi sütunun hangi fiil olduğunu bulur.
+const P_PRES={yo:0,'tú':1,'él':2,ella:2,usted:2,nosotros:3,nosotras:3,vosotros:4,vosotras:4,ellos:5,ellas:5,ustedes:5};
+const P_IMP={'tú':0,vosotros:1,vosotras:1,usted:2,ustedes:3};
+const firstWord=t=>String(t).replace(/\*\*/g,'').trim().split(/[\s/(]+/)[0].toLowerCase();
+function conjInfo(head,rows){
+ const labels=rows.map(r=>firstWord(r[0]));
+ if(/^(şahıs|kişi)$/i.test(firstWord(head[0]))){
+  const mode=labels.includes('yo')?'pres':labels.some(l=>l in P_IMP)?'imp':null;if(!mode)return null;
+  const map=mode==='pres'?P_PRES:P_IMP;
+  return {mode,cell:(r,c,txt)=>{const lemma=firstWord(head[c]);const idx=map[labels[r]];return c>0&&isInf(lemma)&&idx!=null?markIrregular(lemma,mode,idx,txt):null}};
+ }
+ const cols=head.slice(1).map(firstWord);
+ if(firstWord(head[0])==='fiil'&&cols.length&&cols.every(c=>c in P_IMP))return {mode:'imp',cell:(r,c,txt)=>{const lemma=labels[r];return c>0&&isInf(lemma)?markIrregular(lemma,'imp',P_IMP[cols[c-1]],txt):null}};
+ return null;
+}
+const TENSE_LABEL={pres:'Presente de indicativo · şimdiki / geniş zaman',imp:'Imperativo afirmativo · olumlu emir'};
+const tenseCaption=mode=>`<div class="table-caption">${TENSE_LABEL[mode]}<span><mark class="irr">altı çizili</mark> = düzensiz kısım · <span class="end">kutulu</span> = çekim eki</span></div>`;
 // Ders anlatımı biçimi: "## " başlık, "- " madde, "1. " numaralı adım, "| a | b |" tablo satırı (ilk satır başlık), "! " dikkat kutusu, "**x**" kalın.
+function tableHtml(head,body,fmt=E){
+ const info=conjInfo(head,body);
+ return `${info?tenseCaption(info.mode):''}<div class="table-scroller"><table>${head.some(Boolean)?`<thead><tr>${head.map(h=>`<th>${fmt(h)}</th>`).join('')}</tr></thead>`:''}<tbody>${body.map((r,ri)=>`<tr>${r.map((c,ci)=>`<td>${(info&&info.cell(ri,ci,c))??fmt(c)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+}
 function inlineMd(t){return E(t).replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')}
 function explainHtml(l){
  const lines=lessonText[l.id]||[l.explain];let out='',i=0;
@@ -63,7 +131,7 @@ function explainHtml(l){
   const grab=re=>{const g=[];while(i<lines.length&&re.test(lines[i]))g.push(lines[i++]);return g};
   if(/^- /.test(t)){out+=`<ul>${grab(/^- /).map(x=>`<li>${inlineMd(x.slice(2))}</li>`).join('')}</ul>`;continue}
   if(/^\d+\. /.test(t)){out+=`<ol>${grab(/^\d+\. /).map(x=>`<li>${inlineMd(x.replace(/^\d+\. /,''))}</li>`).join('')}</ol>`;continue}
-  if(t.startsWith('|')){const rows=grab(/^\|/).map(x=>x.replace(/^\||\|$/g,'').split('|').map(c=>c.trim()));out+=`<div class="table-scroller"><table><thead><tr>${rows[0].map(c=>`<th>${inlineMd(c)}</th>`).join('')}</tr></thead><tbody>${rows.slice(1).map(r=>`<tr>${r.map(c=>`<td>${inlineMd(c)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;continue}
+  if(t.startsWith('|')){const rows=grab(/^\|/).map(x=>x.replace(/^\||\|$/g,'').split('|').map(c=>c.trim()));out+=tableHtml(rows[0],rows.slice(1),inlineMd);continue}
   out+=`<p>${inlineMd(t)}</p>`;i++}
  return `<div class="explain">${out}</div>`;
 }
@@ -78,10 +146,21 @@ function renderLesson(id){
  return `<div class="breadcrumb"><a href="#/courses">Dersler</a> › <span>İspanyolca ${l.course}</span> › <span>${l.course==='002'?'Hafta '+l.week:'Temel'}</span></div><div class="lesson-head"><div class="button-row" style="margin-bottom:13px">${srcBadge(l)} ${completed.has(l.id)?'<span class="pill teal">✓ Çalışıldı</span>':''}</div><h1>${E(l.title)}</h1><p class="lead lesson-lead">${E(l.subtitle)}</p></div><div class="lesson-layout"><div class="lesson-body"><section class="card section-card" id="aciklama"><div class="label-strong">KONU ANLATIMI</div><h2 style="margin-top:9px">Konuyu öğren</h2>${explainHtml(l)}</section>${lessonText[l.id]?'':`<section class="card section-card" id="kurallar"><div class="label-strong">KURAL + KALIP</div><h2 style="margin-top:9px">Bilmen gerekenler</h2><div class="rule-grid">${l.rules.map(([a,b])=>`<div class="rule-row"><strong>${E(a)}</strong><p>${E(b)}</p></div>`).join('')}</div></section>`}<section class="card section-card" id="ornekler"><div class="label-strong">ES → TR</div><h2 style="margin-top:9px">Örnek cümleler</h2>${l.examples.map(([es,tr])=>`<div class="example-row"><div class="example-es" lang="es">${E(es)}</div><div class="example-tr">${E(tr)}</div></div>`).join('')}</section>${l.table?`<section class="card section-card" id="tablo"><div class="label-strong">ÇEKİM / KARŞILAŞTIRMA</div><h2 style="margin-top:9px">Tablo</h2><div class="table-scroller"><table><thead><tr>${l.table.headers.map(h=>`<th>${E(h)}</th>`).join('')}</tr></thead><tbody>${l.table.rows.map(row=>`<tr>${row.map(c=>`<td>${E(c)}</td>`).join('')}</tr>`).join('')}</tbody></table></div></section>`:''}${sourcesHtml(l)}<div class="hint-box" id="ipucu"><strong>Dikkat:</strong> ${E(l.tip)}</div><div class="button-row spaced"><button class="btn ${completed.has(l.id)?'ghost':'teal'}" data-action="mark" data-id="${E(l.id)}">${completed.has(l.id)?'✓ Tamamlandı · geri al':'✓ Bu dersi tamamladım'}</button><button class="btn ghost" data-action="practice-lesson" data-id="${E(l.id)}">Bu konudan soru çöz →</button></div><div class="button-row spaced" style="justify-content:space-between">${prev?btnLink(pathLink(prev.id),'← Önceki ders','ghost'):'<span></span>'}${next?btnLink(pathLink(next.id),'Sonraki ders →','ghost'):'<span></span>'}</div></div><aside class="lesson-side"><div class="card side-card"><h4>Bu sayfada</h4><div class="mini-list"><a href="#aciklama" data-anchor="aciklama">Konu anlatımı</a>${lessonText[l.id]?'':'<a href="#kurallar" data-anchor="kurallar">Kurallar</a>'}<a href="#ornekler" data-anchor="ornekler">Cümle örnekleri</a>${l.table?'<a href="#tablo" data-anchor="tablo">Çekim tablosu</a>':''}${lessonNotes(l).length?'<a href="#tum-ornekler" data-anchor="tum-ornekler">Defter ve slayttan tüm örnekler</a>':''}<a href="#ipucu" data-anchor="ipucu">Sınav ipucu</a></div></div><div class="card side-card"><h4>Kaynak</h4><p class="small sub">${E(l.source)}</p></div>${notesFor(l.pages).length?`<div class="card side-card"><h4>Defter notları</h4><div class="mini-list">${notesFor(l.pages).map(n=>`<a href="${noteLink(n.id)}">${E(n.title)}</a>`).join('')}</div></div>`:''}${slidesFor(l).length?`<div class="card side-card"><h4>Slayt notları · Hafta ${l.week}</h4><div class="mini-list">${slidesFor(l).map(n=>`<a href="${slideLink(n.id)}">${E(n.title)}</a>`).join('')}</div></div>`:''}<div class="card side-card"><h4>Pratik</h4><p class="small sub">Bu konudan ${questions.filter(q=>q.lesson===l.id).length} soru var.</p><button class="btn sm ghost" data-action="practice-lesson" data-id="${E(l.id)}">Soru çöz →</button></div></aside></div>`;
 }
 function selectVerb(){return verbs.find(v=>v.lemma===state.verbSelected)||verbs[0]}
+function verbTables(list){
+ if(!list.length)return '';
+ const show=(v,mode,i,x)=>state.verbReveal?markIrregular(v.lemma,mode,i,x):'••••';
+ const kinds=[...new Set(list.map(v=>v.kind))];
+ const group=(cols,row)=>kinds.map(k=>`<tr class="group-row"><td colspan="${cols}">${E(k)}</td></tr>${list.filter(v=>v.kind===k).map(row).join('')}`).join('');
+ const lemmaCell=v=>`<td class="sticky-col"><button class="link-btn" data-action="verb-select" data-id="${E(v.lemma)}" lang="es">${E(v.lemma)}</button><span class="tiny muted">${E(v.tr)}</span></td>`;
+ const pres=`<div class="table-scroller"><table class="conj-table"><thead><tr><th class="sticky-col">Fiil</th>${['yo','tú','él / ella / usted','nosotros/as','vosotros/as','ellos / ustedes','gerundio'].map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>${group(8,v=>`<tr>${lemmaCell(v)}${v.present.map((f,i)=>`<td lang="es">${show(v,'pres',i,f)}</td>`).join('')}<td lang="es">${show(v,'ger',0,v.gerund)}</td></tr>`)}</tbody></table></div>`;
+ const withImp=list.filter(v=>v.imperative.length);
+ const imp=withImp.length?`<div class="table-scroller"><table class="conj-table"><thead><tr><th class="sticky-col">Fiil</th>${['tú','vosotros/as','usted','ustedes'].map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>${kinds.map(k=>{const rows=withImp.filter(v=>v.kind===k);return rows.length?`<tr class="group-row"><td colspan="5">${E(k)}</td></tr>${rows.map(v=>`<tr>${lemmaCell(v)}${v.imperative.map((f,i)=>`<td lang="es">${show(v,'imp',i,f)}</td>`).join('')}</tr>`).join('')}`:''}).join('')}</tbody></table></div>`:'';
+ return `<div class="section-heading" id="cekim-tablosu"><h2>Presente de indicativo · şimdiki / geniş zaman</h2><span class="pill">${list.length} fiil</span></div><p class="small sub"><mark class="irr">Altı çizili</mark> harfler düzensiz kısımdır (fiil düzenli olsaydı alacağı biçimden farklı olanlar); <span class="end">kutulu</span> kısım çekim ekidir. Yukarıdaki arama ve fiil türü filtresi bu tabloları da süzer; fiile tıklayınca ayrıntısı açılır.</p>${pres}${imp?`<div class="section-heading"><h2>Imperativo afirmativo · olumlu emir</h2><span class="pill">${withImp.length} fiil</span></div>${imp}`:''}`;
+}
 function renderVerbs(){
  const filtered=verbs.filter(v=>(state.verbKind==='all'||v.kind.includes(state.verbKind))&&(v.lemma+' '+v.tr+' '+v.kind).toLocaleLowerCase('tr').includes(state.verbSearch.toLocaleLowerCase('tr')));
  const v=selectVerb();
- return `<div class="eyebrow">6 ŞAHIS · PRESENTE · GERUNDIO · EMİR</div><h1>Fiil çekimleri</h1><p class="lead">Mastar ve Türkçe anlamla ara. 001'in temel fiillerinden 002'nin kök değiştiren ve dönüşlü fiillerine kadar çekimleri karşılaştır.</p><div class="toolbar"><label class="wide"><span class="form-label">Fiil veya Türkçe anlam ara</span><input class="plain-input" id="verb-search" value="${E(state.verbSearch)}" placeholder="ör. dormir, yatmak, çalışmak…" /></label><label><span class="form-label">Fiil türü</span><select class="plain-select" id="verb-kind"><option value="all" ${state.verbKind==='all'?'selected':''}>Tüm fiiller</option>${['düzenli','düzensiz','yo','e→ie','o→ue','e→i','dönüşlü','özel yapı'].map(x=>`<option value="${x}" ${state.verbKind===x?'selected':''}>${E(x)}</option>`).join('')}</select></label></div><div class="verb-grid"><div class="card verb-list">${filtered.length?filtered.map(x=>`<button class="verb-choice ${x.lemma===v.lemma?'active':''}" data-action="verb-select" data-id="${E(x.lemma)}"><span>${E(x.lemma)}</span><small>${E(x.tr)}</small></button>`).join(''):'<div class="empty">Eşleşen fiil yok.</div>'}</div><div class="card verb-detail"><div class="button-row" style="justify-content:space-between"><div><div class="verb-type">${E(v.kind)}</div><h2 lang="es">${E(v.lemma)}</h2><p class="sub">${E(v.tr)}</p></div><button class="btn sm ghost" data-action="verb-reveal">${state.verbReveal?'Çekimleri gizle':'Çekimleri göster'}</button></div><div class="table-scroller"><table><thead><tr><th>Şahıs</th><th>Presente de indicativo</th></tr></thead><tbody>${person.map((p,i)=>`<tr><td>${E(p)}</td><td lang="es" style="font-weight:750;color:var(--accent)">${state.verbReveal?E(v.present[i]):'••••••'}</td></tr>`).join('')}</tbody></table></div><div class="grid grid-2" style="margin-top:15px"><div class="verb-cell"><div class="label-strong">GERUNDIO</div><h3 lang="es" style="margin-top:9px">${state.verbReveal?E(v.gerund):'••••••'}</h3><p class="small">Estar + gerundio yapısında.</p></div><div class="verb-cell"><div class="label-strong">IMPERATIVO AFIRMATIVO</div>${v.imperative.length?`<div class="small" style="margin-top:9px">${['tú','vosotros','usted','ustedes'].map((p,i)=>`${p}: <strong lang="es">${state.verbReveal?E(v.imperative[i]):'••••'}</strong>`).join('<br>')}</div>`:'<p class="small muted" style="margin-top:10px">Bu fiilin olumlu emri tabloda yok.</p>'}</div></div>${v.kind.includes('özel')?'<p class="hint-box" style="margin-top:14px">Gustar/doler ve benzerlerinde pratikte me/te/le/nos/os/les + gusta(n)/duele(n) yapısı önemlidir.</p>':''}</div></div>`;
+ return `<div class="eyebrow">6 ŞAHIS · PRESENTE · GERUNDIO · EMİR</div><h1>Fiil çekimleri</h1><p class="lead">Mastar ve Türkçe anlamla ara. 001'in temel fiillerinden 002'nin kök değiştiren ve dönüşlü fiillerine kadar çekimleri karşılaştır.</p><div class="toolbar"><label class="wide"><span class="form-label">Fiil veya Türkçe anlam ara</span><input class="plain-input" id="verb-search" value="${E(state.verbSearch)}" placeholder="ör. dormir, yatmak, çalışmak…" /></label><label><span class="form-label">Fiil türü</span><select class="plain-select" id="verb-kind"><option value="all" ${state.verbKind==='all'?'selected':''}>Tüm fiiller</option>${['düzenli','düzensiz','yo','e→ie','o→ue','e→i','dönüşlü','özel yapı'].map(x=>`<option value="${x}" ${state.verbKind===x?'selected':''}>${E(x)}</option>`).join('')}</select></label></div><div class="verb-grid"><div class="card verb-list">${filtered.length?filtered.map(x=>`<button class="verb-choice ${x.lemma===v.lemma?'active':''}" data-action="verb-select" data-id="${E(x.lemma)}"><span>${E(x.lemma)}</span><small>${E(x.tr)}</small></button>`).join(''):'<div class="empty">Eşleşen fiil yok.</div>'}</div><div class="card verb-detail"><div class="button-row" style="justify-content:space-between"><div><div class="verb-type">${E(v.kind)}</div><h2 lang="es">${E(v.lemma)}</h2><p class="sub">${E(v.tr)}</p></div><button class="btn sm ghost" data-action="verb-reveal">${state.verbReveal?'Çekimleri gizle':'Çekimleri göster'}</button></div><div class="table-scroller"><table><thead><tr><th>Şahıs</th><th>Presente de indicativo (şimdiki / geniş zaman)</th></tr></thead><tbody>${person.map((p,i)=>`<tr><td>${E(p)}</td><td lang="es" style="font-weight:750;color:var(--accent)">${state.verbReveal?markIrregular(v.lemma,'pres',i,v.present[i]):'••••••'}</td></tr>`).join('')}</tbody></table></div><div class="grid grid-2" style="margin-top:15px"><div class="verb-cell"><div class="label-strong">GERUNDIO · -arak / -yor</div><h3 lang="es" style="margin-top:9px">${state.verbReveal?markIrregular(v.lemma,'ger',0,v.gerund):'••••••'}</h3><p class="small">Estar + gerundio yapısında.</p></div><div class="verb-cell"><div class="label-strong">IMPERATIVO AFIRMATIVO · olumlu emir</div>${v.imperative.length?`<table class="mini-table" style="margin-top:9px"><tbody>${['tú','vosotros/as','usted','ustedes'].map((p,i)=>`<tr><td>${p}</td><td lang="es" style="font-weight:750;color:var(--accent)">${state.verbReveal?markIrregular(v.lemma,'imp',i,v.imperative[i]):'••••'}</td></tr>`).join('')}</tbody></table>`:'<p class="small muted" style="margin-top:10px">Bu fiilin olumlu emri tabloda yok.</p>'}</div></div>${v.kind.includes('özel')?'<p class="hint-box" style="margin-top:14px">Gustar/doler ve benzerlerinde pratikte me/te/le/nos/os/les + gusta(n)/duele(n) yapısı önemlidir.</p>':''}</div></div>${verbTables(filtered)}`;
 }
 function wordPool(){return vocabulary.filter(g=>(state.vocabCourse==='all'||g.course===state.vocabCourse)&&(state.vocabGroup==='all'||g.group===state.vocabGroup)).flatMap(g=>g.items.map(w=>({...w,group:g.group,course:g.course}))).filter(w=>(w.es+' '+w.tr).toLocaleLowerCase('tr').includes(state.vocabSearch.toLocaleLowerCase('tr')))}
 function renderVocab(){
@@ -111,8 +190,7 @@ function renderBlock(b,i,prefix='blok'){
  const head=`<h2 style="margin-top:0">${E(b.h)}</h2>`;
  if(b.t==='pairs')return `<section class="card section-card" id="${id}">${head}${b.rows.map(([es,tr])=>`<div class="example-row"><div class="example-es" lang="es">${E(es)}</div><div class="example-tr">${E(tr)}</div></div>`).join('')}</section>`;
  if(b.t==='rules')return `<section class="card section-card" id="${id}">${head}<div class="rule-grid">${b.rows.map(([a,c])=>`<div class="rule-row"><strong lang="es">${E(a)}</strong><p>${E(c)}</p></div>`).join('')}</div></section>`;
- const showHead=b.head.some(Boolean);
- return `<section class="card section-card" id="${id}">${head}<div class="table-scroller"><table>${showHead?`<thead><tr>${b.head.map(h=>`<th>${E(h)}</th>`).join('')}</tr></thead>`:''}<tbody>${b.rows.map(r=>`<tr>${r.map((c,j)=>`<td ${j?'lang="es"':''}>${E(c)}</td>`).join('')}</tr>`).join('')}</tbody></table></div></section>`;
+ return `<section class="card section-card" id="${id}">${head}${tableHtml(b.head,b.rows)}</section>`;
 }
 function renderNotes(){
  const q=lower(state.noteSearch.trim());
