@@ -178,12 +178,6 @@ L('002',7,'002-porque','Hafta 7 · Neden ve amaç','Por qué / porque / para qu�
 [['Sebep sorusu','¿Por qué estudias?'],['Sebep cevabı','Porque tengo un examen.'],['Amaç sorusu','¿Para qué estudias?'],['Amaç cevabı','Para aprobar el examen.']],
 [['¿Por qué no sales?','Neden dışarı çıkmıyorsun?'],['Porque estoy cansado.','Çünkü yorgunum.'],['Aprendo español para trabajar.','Çalışmak için İspanyolca öğreniyorum.']],null,
 '“Por qué” ayrı ve aksanlı soru; “porque” bitişik ve aksansız cevap.','002 semana 7; defter sayfaları 51',[51]),
-L("002",7,"002-opinion","Hafta 7 · Fikir bildirme, katılma ve katılmama","Creo que… / Me parece que… / Estoy de acuerdo",
-"Fikir bildirmek için creo que, pienso que, opino que, me parece que + çekimli fiil kullanılır. Katılmak estar de acuerdo, katılmamak no estar de acuerdo / estar en desacuerdo ile söylenir.",
-[["Fikir","Creo que / Pienso que / Opino que + çekimli fiil"],["Gustar gibi","Me parece que… / ¿Qué te parece…?"],["Katılmak","Estoy de acuerdo contigo. / Tienes razón."],["Katılmamak","No estoy de acuerdo. / Estoy en desacuerdo."]],
-[["Creo que el español es muy útil.","Bence İspanyolca çok faydalı."],["Me parece que va a llover.","Bana yağmur yağacak gibi geliyor."],["¿Qué te parece la película? — Me parece aburrida.","Filmi nasıl buldun? — Bence sıkıcı."],["No estoy de acuerdo contigo.","Sana katılmıyorum."]],
-{headers:["Fiil","Yapı","Örnek"],rows:[["creer","creo que + fiil","Creo que tienes razón."],["pensar (e→ie)","pienso que + fiil","Pienso que es caro."],["opinar","opino que + fiil","Opino que es importante."],["parecer","me parece que + fiil","Me parece que está cerrado."],["parecer","me parece + sıfat","Me parece interesante."]]},
-"Que'yu düşürme: Creo que es caro (Creo es caro ✗). Me parece gustar gibi: Me parecen caros (çoğul).","002 semana 7; defter sayfaları 50",[50]),
 L('002',7,'002-imperativo','Hafta 7 · Olumlu emir','Tú / vosotros / usted / ustedes',
 'Olumlu emir birine talimat verme, tavsiye ve rica etme için kullanılır. Düzenli fiillerde tú: habla, come, vive; vosotros: hablad, comed, vivid; usted: hable, coma, viva; ustedes: hablen, coman, vivan. Çok önemli düzensiz tú biçimleri: ven, di, sal, haz, ten, ve, pon, sé.',
 [['Tú','Habla despacio. / Come aquí.'],['Vosotros','Hablad / comed / vivid.'],['Usted','Hable / coma / viva.'],['Düzensiz tú','ir ve; salir sal; tener ten; venir ven; hacer haz; poner pon; decir di; ser sé.']],
@@ -194,7 +188,19 @@ L('002',7,'002-imperativo-ref','Hafta 7 · Dönüşlü olumlu emir','Levántate 
 'Dönüşlü olumlu emir kipinde zamir fiilin sonuna eklenir. Levantarse: tú levántate, vosotros levantaos, usted levántese, ustedes levántense. Vosotros olumlu emirde normal -d son harfi, os eklenince düşer: levantad + os → levantaos. Vurgu korunması için aksan işareti görülebilir.',
 [['Tú','Levántate temprano.'],['Vosotros','Lavaos las manos.'],['Usted','Siéntese, por favor.'],['Ustedes','Pruébense los zapatos.']],
 [['Dúchate ahora.','Şimdi duş al.'],['Sentaos aquí.','Buraya oturun. (vosotros)'],['Levántense, por favor.','Lütfen kalkın. (ustedes)']],null,
-'“Levantados” başka bir biçimdir; vosotros olumlu dönüşlü emir levantaos olur.','002 semana 7; defter sayfaları 52–54',[52,53,54])
+'“Levantados” başka bir biçimdir; vosotros olumlu dönüşlü emir levantaos olur.','002 semana 7; defter sayfaları 52–54',[52,53,54]),
+L("002",8,"002-opinion","Hafta 8 · Fikir bildirme, katılma ve katılmama","Creo que… / Me parece que… / Estoy de acuerdo",
+"Fikir bildirmek için creo que, pienso que, opino que, me parece que + çekimli fiil kullanılır. Katılmak estar de acuerdo, katılmamak no estar de acuerdo / estar en desacuerdo ile söylenir.",
+[["Fikir","Creo que / Pienso que / Opino que + çekimli fiil"],["Gustar gibi","Me parece que… / ¿Qué te parece…?"],["Katılmak","Estoy de acuerdo contigo. / Tienes razón."],["Katılmamak","No estoy de acuerdo. / Estoy en desacuerdo."]],
+[["Creo que el español es muy útil.","Bence İspanyolca çok faydalı."],["Me parece que va a llover.","Bana yağmur yağacak gibi geliyor."],["¿Qué te parece la película? — Me parece aburrida.","Filmi nasıl buldun? — Bence sıkıcı."],["No estoy de acuerdo contigo.","Sana katılmıyorum."]],
+{headers:["Fiil","Yapı","Örnek"],rows:[["creer","creo que + fiil","Creo que tienes razón."],["pensar (e→ie)","pienso que + fiil","Pienso que es caro."],["opinar","opino que + fiil","Opino que es importante."],["parecer","me parece que + fiil","Me parece que está cerrado."],["parecer","me parece + sıfat","Me parece interesante."]]},
+"Que'yu düşürme: Creo que es caro (Creo es caro ✗). Me parece gustar gibi: Me parecen caros (çoğul).","002 semana 8 (Unidad 10); defter sayfaları 50",[50]),
+L("002",8,"002-negacion","Hafta 8 · Hayır demenin yolları: negación","Bueno, bueno, no… / ¡Ni hablar! / No… nada",
+"İspanyolcada sadece “no” demek kaba kaçabilir; konuşanlar olumsuzluğu yumuşatır ya da güçlendirir. Zayıf olumsuzluk (Bueno, bueno, no…), güçlü olumsuzluk (¡Ni hablar!, ¡Que no!) ve çifte olumsuzluk (No… nada, nunca jamás, ni… ni…) vardır.",
+[["Zayıf","Bueno, bueno, no… / No + bilgi / Nunca + bilgi"],["Güçlü","¡Ni hablar! / No quiero ni + mastar / ¡Que no!"],["Çifte","No + fiil + nada / nadie / nunca; nunca jamás; ni… ni…"],["Kural","nada, nadie, nunca fiilden sonra gelirse fiilin önünde no olur."]],
+[["¡Ni hablar! No quiero ni verla.","Asla! Onu görmek bile istemiyorum."],["No, gracias, abuela, no tengo hambre.","Hayır, teşekkürler nine, aç değilim."],["Que no, abuela, que no quiero nada.","Hayır nine, hiçbir şey istemiyorum dedim."],["No los vuelvo a llevar nunca jamás.","Onları bir daha asla götürmem."]],
+{headers:["Tür","Kalıp","Örnek"],rows:[["Zayıf / nötr","Bueno, bueno, no…","Bueno, bueno, no lo creo."],["Zayıf / nötr","No + bilgi","No, gracias, no tengo hambre."],["Zayıf / nötr","Nunca + bilgi","Nunca se pueden hacer planes contigo."],["Güçlü","¡Ni hablar!","¡Ni hablar! No voy."],["Güçlü","No quiero ni + mastar","No quiero ni verla."],["Güçlü","¡Que no!","¡Que no! Que ni hoy ni nunca."],["Çifte","No + fiil + nada","No quiero nada."],["Çifte","Nunca jamás","No vuelvo nunca jamás."],["Çifte","Ni… ni…","Ni hoy ni nunca."]]},
+"nada / nadie / nunca fiilden sonra ise fiilin önünde no zorunlu: No como nada (Como nada ✗). Fiilden önceyse no gelmez: Nunca como carne.","002 semana 8 (Unidad 10)",[])
 ];
 const W=(course,group,items,ref)=>({course,group,ref,items:items.split(';').map(x=>{const [es,tr]=x.split('=');return {es,tr}})});
 export const vocabulary=[
@@ -406,6 +412,13 @@ Q("001-saber","conocer'in yo biçimi?","conoco|conozo|conozco|conocí",2,"-cer i
 Q("002-opinion","“Bence çok pahalı” hangisi?","Creo es muy caro.|Creo que es muy caro.|Creo que ser muy caro.|Me creo que es caro.",1,"creer que + çekimli fiil; que düşmez.","genel"),
 Q("002-opinion","“Filmler bana sıkıcı geliyor” hangisi?","Me parece aburridas las películas.|Me parecen aburridas las películas.|Parezco aburridas las películas.|Me parecen aburrido las películas.",1,"parecer gustar gibi çalışır: çoğul özne → parecen; sıfat uyumu aburridas.","gustar"),
 Q("002-opinion","“Sana katılmıyorum” hangisi?","No soy de acuerdo.|No estoy de acuerdo contigo.|No tengo de acuerdo.|No estoy acuerdo contigo.",1,"Katılmak estar de acuerdo; olumsuzu no estar de acuerdo.","genel"),
+Q("002-opinion","“… hakkında ne düşünüyorsun?” hangisi?","¿Qué piensas de la película?|¿Qué piensas la película?|¿Qué piensas a la película?|¿Qué pienso de la película?",0,"Fikir sorarken pensar / opinar + de + konu: ¿Qué piensas de…?","genel"),
+Q("002-opinion","Kısmen katılmak için hangisi?","No tienes razón.|Creo que tienes razón, pero…|¡Ni hablar!|No me gusta tu idea.",1,"Creo que tienes razón, pero… kısmi katılmadır: haklısın ama…","genel"),
+Q("002-opinion","“Bu pantolonu nasıl buldun?” hangisi?","¿Qué te parece estos pantalones?|¿Qué te parecen estos pantalones?|¿Qué parecen estos pantalones?|¿Qué te pareces estos pantalones?",1,"parecer gustar gibi: çoğul konu → parecen.","gustar"),
+Q("002-negacion","Hangisi güçlü bir olumsuzluktur?","Bueno, bueno, no…|No, gracias.|¡Ni hablar!|No lo creo.",2,"¡Ni hablar! kesin ve güçlü bir “asla”dır; Bueno, bueno, no… yumuşak olumsuzluktur.","genel"),
+Q("002-negacion","“Hiçbir şey istemiyorum” hangisi?","Quiero nada.|No quiero nada.|No quiero algo.|Nada no quiero.",1,"nada fiilden sonra gelirse fiilin önüne no gelir: No quiero nada.","genel"),
+Q("002-negacion","“Ne bugün ne de hiçbir zaman” hangisi?","No hoy no nunca.|O hoy o nunca.|Ni hoy ni nunca.|Nada hoy nada nunca.",2,"ni… ni… “ne… ne…” anlamında çifte olumsuzluktur.","genel"),
+Q("002-negacion","Hangisi doğru?","Nunca no como carne.|No como carne nunca.|Como carne nunca.|No nunca como carne.",1,"nunca fiilden sonra ise no fiilden önce gelir: No como carne nunca = Nunca como carne.","genel"),
 Q('002-imperativo-ref','Vosotros olumlu emir: “kalkın” (levantarse)','levantaos|levantados|os levanta|levántese',0,'Vosotros + os ile -d düşer: levantaos.','imperativo'),
 Q('002-imperativo-ref','Tú olumlu emir: “otur” (sentarse)','se sienta|siéntate|siéntese|os sentáis',1,'Tú olumlu dönüşlü emir: siéntate.','imperativo')
 ];
