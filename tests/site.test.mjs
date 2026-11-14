@@ -94,6 +94,26 @@ test('every lesson has a detailed explanation and valid linked notes', async () 
   for (const id of ids) assert.ok(linked.has(id), `note ${id} is not shown on any lesson page`);
 });
 
+test('irregular parts and endings are marked correctly', () => {
+  const app = readFileSync(path.join(root, 'app.js'), 'utf8');
+  const code = app.slice(app.indexOf('// Düzensiz kısmı bulma'), app.indexOf('// Tablo bir çekim'));
+  const ctx = vm.createContext({});
+  vm.runInContext(`const E=s=>String(s);${code};this.mark=markIrregular;`, ctx);
+  const short = (l, m, i, f) => ctx.mark(l, m, i, f).replace(/<mark class="irr">(.*?)<\/mark>/g, '[$1]').replace(/<span class="end">(.*?)<\/span>/g, '($1)').replace(/<span class="pron">(.*?)<\/span>/g, '{$1}');
+  const cases = [
+    ['hablar', 'pres', 0, 'hablo', 'habl(o)'], ['vivir', 'pres', 3, 'vivimos', 'viv(imos)'],
+    ['tener', 'pres', 0, 'tengo', 'ten[g](o)'], ['querer', 'pres', 5, 'quieren', 'qu[ie]r(en)'],
+    ['jugar', 'pres', 0, 'juego', 'j[ue]g(o)'], ['pedir', 'pres', 0, 'pido', 'p[i]d(o)'],
+    ['conocer', 'pres', 0, 'conozco', 'cono[z]c(o)'], ['ser', 'pres', 0, 'soy', '[soy]'],
+    ['ir', 'pres', 3, 'vamos', '[vamos]'], ['saber', 'pres', 0, 'sé', '[sé]'],
+    ['acostarse', 'pres', 0, 'me acuesto', 'me ac[ue]st(o)'], ['leer', 'ger', 0, 'leyendo', 'le[y](endo)'],
+    ['hablar', 'imp', 2, 'hable', 'habl(e)'], ['tener', 'imp', 2, 'tenga', 'ten[g](a)'],
+    ['salir', 'imp', 0, 'sal', '[sal]'], ['ir', 'imp', 1, 'id', '(id)'],
+    ['levantarse', 'imp', 0, 'levántate', 'levánt(a){te}'], ['levantarse', 'imp', 1, 'levantaos', 'levant(a){os}'],
+  ];
+  for (const [l, m, i, f, want] of cases) assert.equal(short(l, m, i, f), want, `${l} ${f}`);
+});
+
 test('interface has navigation, quiz, conjugations and notebook notes', () => {
   const html = readFileSync(htmlPath, 'utf8');
   for (const label of ['İspanyolca 001', 'İspanyolca 002', 'Fiil çekimleri', 'Kelime', 'Test', 'Defter notları', 'Slayt notları', 'Yazma']) assert.ok(html.includes(label), label);
