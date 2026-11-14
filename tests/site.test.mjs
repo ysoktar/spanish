@@ -27,11 +27,11 @@ test('site source files exist and no notebook photos are shipped', () => {
   for (const f of ['index.html', 'app.js', 'styles.css']) assert.ok(!/assets\/photos|\.jpg\b/.test(readFileSync(path.join(root, f), 'utf8')), f);
 });
 
-test('curriculum covers 001 and all seven weeks of 002', async () => {
+test('curriculum covers 001 and all eight weeks of 002', async () => {
   const {lessons, verbs, vocabulary, questions, writingPrompts} = await import(dataPath);
   assert.ok(lessons.filter(x => x.course === '001').length >= 10);
   assert.ok(lessons.filter(x => x.course === '002').length >= 12);
-  for (let w = 1; w <= 7; w++) assert.ok(lessons.some(x => x.course === '002' && x.week === w));
+  for (let w = 1; w <= 8; w++) assert.ok(lessons.some(x => x.course === '002' && x.week === w));
   assert.ok(lessons.every(x => x.id && x.title && x.explain && x.examples?.length >= 2 && x.source && Array.isArray(x.pages)));
   assert.equal(new Set(lessons.map(x => x.id)).size, lessons.length);
   assert.ok(verbs.length >= 45);
@@ -60,12 +60,12 @@ test('notebook transcription covers the notebook pages and is well formed', asyn
   for (const l of lessons) for (const p of l.pages) assert.ok(pages.has(p) || p === 43, `${l.id} cites page ${p}`);
 });
 
-test('slide notes cover all seven weeks of 002 and are well formed', async () => {
+test('slide notes cover all eight weeks of 002 and are well formed', async () => {
   const {slides} = await import(slidesPath);
   const {notebook} = await import(notebookPath);
   const ids = [...slides, ...notebook].map(n => n.id);
   assert.equal(new Set(ids).size, ids.length);
-  for (let w = 1; w <= 7; w++) assert.ok(slides.some(n => n.week === w), `week ${w}`);
+  for (let w = 1; w <= 8; w++) assert.ok(slides.some(n => n.week === w), `week ${w}`);
   for (const n of slides) { assert.equal(n.course, '002'); checkBlocks(n); }
 });
 
@@ -77,7 +77,16 @@ test('every lesson has a detailed explanation and valid linked notes', async () 
   const ids = new Set([...notebook, ...slides].map(n => n.id));
   for (const l of lessons) {
     const text = lessonText[l.id];
-    assert.ok(Array.isArray(text) && text.join(' ').length > 1200, `${l.id} explanation too short`);
+    assert.ok(Array.isArray(text) && text.length >= 12, `${l.id} explanation too short`);
+    assert.ok(text.some(x => x.startsWith('|')) && text.some(x => /^(- |\d+\. )/.test(x)), `${l.id} needs a table and a list`);
+    assert.ok(text.some(x => x.startsWith('## Sık yapılan hatalar')), `${l.id} needs a common-mistakes section`);
+    let cols = 0;
+    for (const x of text) {
+      if (!x.startsWith('|')) { cols = 0; continue; }
+      assert.ok(x.endsWith('|'), `${l.id}: broken table row ${x}`);
+      const n = x.slice(1, -1).split('|').length;
+      if (!cols) cols = n; else assert.equal(n, cols, `${l.id}: table row has ${n} columns, expected ${cols}: ${x}`);
+    }
     for (const id of lessonSources[l.id] || []) assert.ok(ids.has(id), `${l.id} links missing note ${id}`);
   }
   for (const id of Object.keys(lessonText)) assert.ok(lessons.some(l => l.id === id), `unknown lesson ${id}`);
@@ -95,6 +104,7 @@ test('interface has navigation, quiz, conjugations and notebook notes', () => {
 
 test('build produces a dist/ that loads in a browser-like context', () => {
   execFileSync(process.execPath, [path.join(root, 'scripts/build.mjs')], {cwd: root});
+  new vm.Script(readFileSync(path.join(root, 'app.js'), 'utf8'), {filename: 'app.js'});
   for (const f of ['index.html', 'app.js', 'styles.css', 'data.js', 'favicon.svg', 'apple-touch-icon.png']) assert.ok(existsSync(path.join(root, 'dist', f)), f);
   const ctx = vm.createContext({});
   vm.runInContext(readFileSync(path.join(root, 'dist/data.js'), 'utf8') + ';this.counts=[lessons.length,notebook.length,slides.length,verbs.length];', ctx);

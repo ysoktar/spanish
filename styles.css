@@ -16,3 +16,4 @@ h1,h2,h3,h4,p{margin-top:0}h1{font-size:clamp(33px,4.2vw,56px);letter-spacing:-2
 @media print{.sidebar,.topbar,.footer,.lesson-side,.button-row,.btn{display:none!important}.shell{display:block}#app{padding:0;max-width:100%}.card{box-shadow:none;break-inside:avoid}.lesson-layout{display:block}body{background:white;color:black}}
 
 .explain p{line-height:1.85;margin:0 0 14px}.explain p:last-child{margin-bottom:0}.explain h3{font-size:17px;margin:22px 0 8px;color:var(--accent)}.source-head{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:22px 0 10px;font-weight:700}.source-head a:hover{color:var(--accent)}
+.explain ul,.explain ol{margin:0 0 14px;padding-left:22px;line-height:1.75}.explain li{margin:3px 0}.explain .table-scroller{margin:0 0 14px}.explain .hint-box{margin:0 0 14px}.explain strong{color:var(--text)}
