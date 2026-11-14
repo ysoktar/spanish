@@ -113,6 +113,8 @@ test('irregular parts and endings are marked correctly', () => {
     ['levantarse', 'imp', 0, 'levántate', 'levánt(a){te}'], ['levantarse', 'imp', 1, 'levantaos', 'levant(a){os}'],
   ];
   for (const [l, m, i, f, want] of cases) assert.equal(short(l, m, i, f), want, `${l} ${f}`);
+  for (const [l, f, want] of [['hablar', 'hablado', 'habl(ado)'], ['vivir', 'vivido', 'viv(ido)'], ['escribir', 'escrito', 'escri[t]o'], ['ver', 'visto', 'vi[st]o'], ['abrir', 'abierto', 'ab[iert]o'], ['leer', 'leído', 'le(ído)']])
+    assert.equal(short(l, 'part', 0, f), want, `${l} ${f}`);
 });
 
 test('interface has navigation, quiz, conjugations and notebook notes', () => {

@@ -31,3 +31,4 @@ mark.irr{background:#fde2dd;color:#b3261e;font-weight:800;text-decoration:underl
 .table-caption + .table-scroller{border-top-left-radius:0;border-top-right-radius:0}
 .table-caption + .table-scroller table{border-top-left-radius:0;border-top-right-radius:0}
 .table-caption mark.irr,.table-caption .end,.table-caption .pron{text-decoration:none;border:1px solid rgba(255,255,255,.6)}
+.aux{background:#efe3fb;color:#6a2ea0;font-weight:800;border-radius:4px;padding:0 3px}:root[data-theme=dark] .aux{background:#3b2552;color:#d9b8ff}.table-caption .aux{border:1px solid rgba(255,255,255,.6)}
