@@ -1,14 +1,15 @@
 # spanish
 
 <!-- spanish-study-site -->
-## İspanyolca 001 + 002 çalışma sitesi
+## İspanyolca 001–004 çalışma sitesi
 
 Türkçe anlatımlı çalışma sitesi: [Siteyi aç](https://ysoktar.github.io/spanish/).
 
 - Kronolojik konu anlatımları (001 temelleri, 002'nin 8 haftası): her derste adım adım anlatım, çekim tabloları, sık yapılan hatalar ve o konuya ait defter ve slayt örneklerinin tamamı.
 - **Defter notları:** ders defterinin 54 sayfası metne aktarıldı; kurallar, tablolar ve her cümlenin Türkçesi. Defterdeki hatalar düzeltildi ve “Dikkat” kutularında belirtildi. Fotoğraflar yayımlanmaz.
 - **Slayt notları:** “002 semana 1–8” sunumlarında olup defterde olmayan içerik: kültür kutuları (tapas, öğün saatleri), diyaloglar, ek fiil tabloları ve alıştırmaların cevap anahtarı.
-- **Kitap üniteleri:** Nuevo Prisma A1 (Edición ampliada) Ünite 1–12 ve her ünitenin sitedeki dersleri. Kitabın metni yer almaz.
+- **İSP 003 ve 004 (A2):** Prisma A2’nin 12 ünitesi; 003 = Ünite 1–6, 004 = Ünite 7–12. Konu sırası Edinumen’in yayımladığı Prisma A2 (Continúa) içindekiler listesinden alındı, anlatımlar genel dil bilgisine göre yazıldı; kitap metni yoktur. Slaytlar gelince güncellenecek.
+- **Kitap üniteleri:** Nuevo Prisma A1 (Edición ampliada) ve Prisma A2 ünite haritası, her ünitenin sitedeki dersleriyle. Kitabın metni yer almaz.
 - **Son konular (slayt bekleniyor):** pretérito perfecto, pretérito indefinido, nesne zamirleri, işaret sözcükleri, karşılaştırma ve üstünlük; genel dil bilgisine dayanır, slayt gelince güncellenecek.
 - Fiil çekimleri, kelime kartları, açıklamalı testler ve paragraf yazma alanı.
 - İlerleme, test sonuçları ve yazma taslakları yalnızca tarayıcıda saklanır. Sitenin harici bağlantısı veya izleme kodu yoktur.
