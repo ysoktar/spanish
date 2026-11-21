@@ -27,6 +27,13 @@ test('site source files exist and no notebook photos are shipped', () => {
   for (const f of ['index.html', 'app.js', 'styles.css']) assert.ok(!/assets\/photos|\.jpg\b/.test(readFileSync(path.join(root, f), 'utf8')), f);
 });
 
+test('A2 courses 003 and 004 cover Prisma A2 units 1-6 and 7-12', async () => {
+  const {lessons, questions} = await import(dataPath);
+  for (let u = 1; u <= 6; u++) assert.ok(lessons.some(l => l.course === '003' && l.week === u), `003 unit ${u}`);
+  for (let u = 7; u <= 12; u++) assert.ok(lessons.some(l => l.course === '004' && l.week === u), `004 unit ${u}`);
+  for (const l of lessons.filter(l => /^00[34]$/.test(l.course))) assert.ok(questions.some(q => q.lesson === l.id), `${l.id} has no quiz question`);
+});
+
 test('curriculum covers 001 and all eight weeks of 002', async () => {
   const {lessons, verbs, vocabulary, questions, writingPrompts} = await import(dataPath);
   assert.ok(lessons.filter(x => x.course === '001').length >= 10);
@@ -115,6 +122,12 @@ test('irregular parts and endings are marked correctly', () => {
   for (const [l, m, i, f, want] of cases) assert.equal(short(l, m, i, f), want, `${l} ${f}`);
   for (const [l, f, want] of [['hablar', 'hablado', 'habl(ado)'], ['vivir', 'vivido', 'viv(ido)'], ['escribir', 'escrito', 'escri[t]o'], ['ver', 'visto', 'vi[st]o'], ['abrir', 'abierto', 'ab[iert]o'], ['leer', 'leído', 'le(ído)']])
     assert.equal(short(l, 'part', 0, f), want, `${l} ${f}`);
+  for (const [l, i, f, want] of [['hablar', 0, 'hablé', 'habl(é)'], ['comer', 5, 'comieron', 'com(ieron)'], ['estar', 0, 'estuve', 'est[uv](e)'], ['tener', 2, 'tuvo', 't[uv](o)'], ['decir', 2, 'dijo', 'd[ij](o)'], ['ser', 0, 'fui', '[fui]']])
+    assert.equal(short(l, 'indef', i, f), want, `${l} ${f}`);
+  for (const [l, m, i, f, want] of [['hablar', 'impf', 3, 'hablábamos', 'habl(ábamos)'], ['ser', 'impf', 0, 'era', '[era]'], ['ver', 'impf', 0, 'veía', 'v[e](ía)'],
+    ['hablar', 'fut', 0, 'hablaré', 'hablar(é)'], ['tener', 'fut', 0, 'tendré', '[tendr](é)'], ['hacer', 'fut', 3, 'haremos', '[har](emos)'], ['poder', 'cond', 1, 'podrías', '[podr](ías)'],
+    ['hablar', 'subj', 0, 'hable', 'habl(e)'], ['tener', 'subj', 0, 'tenga', 'ten[g](a)'], ['ser', 'subj', 0, 'sea', '[sea]']])
+    assert.equal(short(l, m, i, f), want, `${l} ${m} ${f}`);
 });
 
 test('interface has navigation, quiz, conjugations and notebook notes', () => {
