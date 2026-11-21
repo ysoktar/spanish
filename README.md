@@ -8,6 +8,8 @@ Türkçe anlatımlı çalışma sitesi: [Siteyi aç](https://ysoktar.github.io/s
 - Kronolojik konu anlatımları (001 temelleri, 002'nin 8 haftası): her derste adım adım anlatım, çekim tabloları, sık yapılan hatalar ve o konuya ait defter ve slayt örneklerinin tamamı.
 - **Defter notları:** ders defterinin 54 sayfası metne aktarıldı; kurallar, tablolar ve her cümlenin Türkçesi. Defterdeki hatalar düzeltildi ve “Dikkat” kutularında belirtildi. Fotoğraflar yayımlanmaz.
 - **Slayt notları:** “002 semana 1–8” sunumlarında olup defterde olmayan içerik: kültür kutuları (tapas, öğün saatleri), diyaloglar, ek fiil tabloları ve alıştırmaların cevap anahtarı.
+- **Kitap üniteleri:** Nuevo Prisma A1 (Edición ampliada) Ünite 1–12 ve her ünitenin sitedeki dersleri. Kitabın metni yer almaz.
+- **Son konular (slayt bekleniyor):** pretérito perfecto, pretérito indefinido, nesne zamirleri, işaret sözcükleri, karşılaştırma ve üstünlük; genel dil bilgisine dayanır, slayt gelince güncellenecek.
 - Fiil çekimleri, kelime kartları, açıklamalı testler ve paragraf yazma alanı.
 - İlerleme, test sonuçları ve yazma taslakları yalnızca tarayıcıda saklanır. Sitenin harici bağlantısı veya izleme kodu yoktur.
 

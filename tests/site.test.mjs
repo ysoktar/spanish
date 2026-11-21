@@ -115,6 +115,8 @@ test('irregular parts and endings are marked correctly', () => {
   for (const [l, m, i, f, want] of cases) assert.equal(short(l, m, i, f), want, `${l} ${f}`);
   for (const [l, f, want] of [['hablar', 'hablado', 'habl(ado)'], ['vivir', 'vivido', 'viv(ido)'], ['escribir', 'escrito', 'escri[t]o'], ['ver', 'visto', 'vi[st]o'], ['abrir', 'abierto', 'ab[iert]o'], ['leer', 'leído', 'le(ído)']])
     assert.equal(short(l, 'part', 0, f), want, `${l} ${f}`);
+  for (const [l, i, f, want] of [['hablar', 0, 'hablé', 'habl(é)'], ['comer', 5, 'comieron', 'com(ieron)'], ['estar', 0, 'estuve', 'est[uv](e)'], ['tener', 2, 'tuvo', 't[uv](o)'], ['decir', 2, 'dijo', 'd[ij](o)'], ['ser', 0, 'fui', '[fui]']])
+    assert.equal(short(l, 'indef', i, f), want, `${l} ${f}`);
 });
 
 test('interface has navigation, quiz, conjugations and notebook notes', () => {
