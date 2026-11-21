@@ -141,6 +141,8 @@ test('interface has navigation, quiz, conjugations and notebook notes', () => {
 test('build produces a dist/ that loads in a browser-like context', () => {
   execFileSync(process.execPath, [path.join(root, 'scripts/build.mjs')], {cwd: root});
   new vm.Script(readFileSync(path.join(root, 'app.js'), 'utf8'), {filename: 'app.js'});
+  const builtHtml = readFileSync(path.join(root, 'dist/index.html'), 'utf8');
+  for (const f of ['data.js', 'app.js', 'styles.css']) assert.match(builtHtml, new RegExp(`\\./${f.replace('.', '\\.')}\\?v=[0-9a-f]{10}`), `${f} is not cache-busted`);
   for (const f of ['index.html', 'app.js', 'styles.css', 'data.js', 'favicon.svg', 'apple-touch-icon.png']) assert.ok(existsSync(path.join(root, 'dist', f)), f);
   const ctx = vm.createContext({});
   vm.runInContext(readFileSync(path.join(root, 'dist/data.js'), 'utf8') + ';this.counts=[lessons.length,notebook.length,slides.length,verbs.length];', ctx);
