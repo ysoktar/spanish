@@ -130,6 +130,29 @@ test('irregular parts and endings are marked correctly', () => {
     assert.equal(short(l, m, i, f), want, `${l} ${m} ${f}`);
 });
 
+test('conjugation engine produces correct forms for every tense', async () => {
+  const {verbs} = await import(dataPath);
+  const {conjugate, TENSES} = await import(path.join(root, 'conjugations.js'));
+  const V = l => verbs.find(v => v.lemma === l);
+  const cases = [
+    ['tener', 'indef', 'tuve,tuviste,tuvo,tuvimos,tuvisteis,tuvieron'], ['pedir', 'indef', 'pedí,pediste,pidió,pedimos,pedisteis,pidieron'],
+    ['dormir', 'indef', 'dormí,dormiste,durmió,dormimos,dormisteis,durmieron'], ['leer', 'indef', 'leí,leíste,leyó,leímos,leísteis,leyeron'],
+    ['jugar', 'indef', 'jugué,jugaste,jugó,jugamos,jugasteis,jugaron'], ['decir', 'indef', 'dije,dijiste,dijo,dijimos,dijisteis,dijeron'],
+    ['ser', 'impf', 'era,eras,era,éramos,erais,eran'], ['hablar', 'impf', 'hablaba,hablabas,hablaba,hablábamos,hablabais,hablaban'],
+    ['hacer', 'fut', 'haré,harás,hará,haremos,haréis,harán'], ['poder', 'cond', 'podría,podrías,podría,podríamos,podríais,podrían'],
+    ['pensar', 'subj', 'piense,pienses,piense,pensemos,penséis,piensen'], ['dormir', 'subj', 'duerma,duermas,duerma,durmamos,durmáis,duerman'],
+    ['empezar', 'subj', 'empiece,empieces,empiece,empecemos,empecéis,empiecen'], ['estar', 'subj', 'esté,estés,esté,estemos,estéis,estén'],
+    ['levantarse', 'impneg', 'no te levantes,no os levantéis,no se levante,no se levanten'], ['ver', 'perf', 'he visto,has visto,ha visto,hemos visto,habéis visto,han visto'],
+    ['levantarse', 'perf', 'me he levantado,te has levantado,se ha levantado,nos hemos levantado,os habéis levantado,se han levantado'],
+  ];
+  for (const [l, t, want] of cases) assert.equal(conjugate(V(l), t).join(','), want, `${l} ${t}`);
+  for (const v of verbs) for (const t of TENSES) {
+    const f = conjugate(v, t.id);
+    assert.equal(f.length, t.persons, `${v.lemma} ${t.id}`);
+    for (const x of f) assert.ok(x && !/undefined|null/.test(x), `${v.lemma} ${t.id}: ${x}`);
+  }
+});
+
 test('interface has navigation, quiz, conjugations and notebook notes', () => {
   const html = readFileSync(htmlPath, 'utf8');
   for (const label of ['İspanyolca 001', 'İspanyolca 002', 'Fiil çekimleri', 'Kelime', 'Test', 'Defter notları', 'Slayt notları', 'Yazma']) assert.ok(html.includes(label), label);
