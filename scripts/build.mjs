@@ -1,5 +1,5 @@
 // Builds the static site into dist/ for GitHub Pages.
-// content.js, notebook.js, slides.js and lessons-detail.js are ES modules (the tests import them); the browser
+// content.js, notebook.js, slides.js, lessons-detail.js and conjugations.js are ES modules (the tests import them); the browser
 // gets them as one classic script (data.js) so the site also works from file://.
 import {readFileSync, writeFileSync, mkdirSync, rmSync, copyFileSync} from 'node:fs';
 import path from 'node:path';
@@ -15,7 +15,7 @@ const asClassicScript = file => {
 
 rmSync(out, {recursive: true, force: true});
 mkdirSync(out);
-writeFileSync(path.join(out, 'data.js'), `"use strict";\n${asClassicScript('content.js')}\n${asClassicScript('notebook.js')}\n${asClassicScript('slides.js')}\n${asClassicScript('lessons-detail.js')}`);
+writeFileSync(path.join(out, 'data.js'), `"use strict";\n${asClassicScript('content.js')}\n${asClassicScript('notebook.js')}\n${asClassicScript('slides.js')}\n${asClassicScript('lessons-detail.js')}\n${asClassicScript('conjugations.js')}`);
 for (const file of ['app.js', 'styles.css', 'favicon.svg', 'apple-touch-icon.png']) copyFileSync(path.join(root, file), path.join(out, file));
 // Cache busting: GitHub Pages lets browsers cache files for 10 minutes, so a visitor could get a new
 // index.html/app.js with an old data.js. Each asset URL in index.html gets a ?v=<content hash>.

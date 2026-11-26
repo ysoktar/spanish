@@ -655,6 +655,3 @@ Q("004-subjuntivo","ser subjuntivo, yo?","soy|sea|era|sé",1,"ser: sea, seas, se
 Q('002-imperativo-ref','Vosotros olumlu emir: “kalkın” (levantarse)','levantaos|levantados|os levanta|levántese',0,'Vosotros + os ile -d düşer: levantaos.','imperativo'),
 Q('002-imperativo-ref','Tú olumlu emir: “otur” (sentarse)','se sienta|siéntate|siéntese|os sentáis',1,'Tú olumlu dönüşlü emir: siéntate.','imperativo')
 ];
-
-// Düzensiz participiolar (pretérito perfecto için). Düzenliler -ado / -ido ile otomatik kurulur.
-export const irregularParticiples={hacer:'hecho',decir:'dicho',ver:'visto',escribir:'escrito',poner:'puesto',volver:'vuelto',abrir:'abierto',romper:'roto',morir:'muerto',descubrir:'descubierto',resolver:'resuelto',devolver:'devuelto',deshacer:'deshecho',satisfacer:'satisfecho'};

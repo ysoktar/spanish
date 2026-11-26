@@ -11,6 +11,7 @@ Türkçe anlatımlı çalışma sitesi: [Siteyi aç](https://ysoktar.github.io/s
 - **İSP 003 ve 004 (A2):** Prisma A2’nin 12 ünitesi; 003 = Ünite 1–6, 004 = Ünite 7–12. Konu sırası Edinumen’in yayımladığı Prisma A2 (Continúa) içindekiler listesinden alındı, anlatımlar genel dil bilgisine göre yazıldı; kitap metni yoktur. Slaytlar gelince güncellenecek.
 - **Kitap üniteleri:** Nuevo Prisma A1 (Edición ampliada) ve Prisma A2 ünite haritası, her ünitenin sitedeki dersleriyle. Kitabın metni yer almaz.
 - **Son konular (slayt bekleniyor):** pretérito perfecto, pretérito indefinido, nesne zamirleri, işaret sözcükleri, karşılaştırma ve üstünlük; genel dil bilgisine dayanır, slayt gelince güncellenecek.
+- **Fiil çekimleri:** kurs (001–004) ve çekim (10 zaman) seçimi; fiil kartında seçili fiilin bütün zamanları ve ilk geçtiği ders.
 - Fiil çekimleri, kelime kartları, açıklamalı testler ve paragraf yazma alanı.
 - İlerleme, test sonuçları ve yazma taslakları yalnızca tarayıcıda saklanır. Sitenin harici bağlantısı veya izleme kodu yoktur.
 
@@ -21,6 +22,7 @@ Türkçe anlatımlı çalışma sitesi: [Siteyi aç](https://ysoktar.github.io/s
 | `content.js` | Dersler, fiiller, kelimeler, sorular, yazma görevleri |
 | `notebook.js` | Defter notları (sayfa numaralarıyla) |
 | `slides.js` | Slayt notları (hafta numaralarıyla) |
+| `conjugations.js` | Çekim motoru: 10 zamanın biçimleri (indefinido, imperfecto, futuro, condicional, subjuntivo, emirler…) ve düzensiz participiolar |
 | `lessons-detail.js` | Derslerin ayrıntılı anlatımı ve her derse bağlı defter/slayt notları |
 | `app.js`, `index.html`, `styles.css` | Arayüz |
 | `scripts/build.mjs` | `dist/` klasörünü üretir; veri dosyalarını tarayıcı için `data.js` olarak birleştirir |
