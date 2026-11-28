@@ -667,7 +667,7 @@ export const lessonText={
 "| vosotros | buscasteis | llegasteis | empezasteis |",
 "| ellos / ellas | buscaron | llegaron | empezaron |",
 "## Slayttan: doğru seçenek (cevaplar)",
-"1. Ayer te **escribí** un correo. (yo → ben sana yazdım)",
+"1. Ayer te **escribí / escribió / escribieron** un correo. (Üçü de doğru: özne verilmemiş. te öznenin değil “sana”nın zamiri: ben / o / onlar sana yazdı.)",
 "2. Mario **estuvo** de intercambio en Japón en el 2012.",
 "3. Mi hijo mayor **nació** en 1998.",
 "4. El domingo (tú) **fuiste** a comer con Ernesto.",
