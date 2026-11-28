@@ -12,6 +12,9 @@ Türkçe anlatımlı çalışma sitesi: [Siteyi aç](https://ysoktar.github.io/s
 - **Kitap üniteleri:** Nuevo Prisma A1 (Edición ampliada) ve Prisma A2 ünite haritası, her ünitenin sitedeki dersleriyle. Kitabın metni yer almaz.
 - **Son konular (slayt bekleniyor):** pretérito perfecto, pretérito indefinido, nesne zamirleri, işaret sözcükleri, karşılaştırma ve üstünlük; genel dil bilgisine dayanır, slayt gelince güncellenecek.
 - **Fiil çekimleri:** kurs (001–004) ve çekim (10 zaman) seçimi; fiil kartında seçili fiilin bütün zamanları ve ilk geçtiği ders.
+- **Gramer kuralları:** bütün derslerin kuralları, sık yapılan hataları (✗ → ✓) ve ipuçları tek sayfada; arama, kurs filtresi ve konu dizini.
+- **Telefon:** alt gezinme çubuğu, üst çubukta sayfa adı ve arama, dar ekranda kart görünümüne geçen tablolar, kaydırma ipucu, yukarı dön düğmesi. Ana ekrana eklenebilir (PWA); açılan sayfalar çevrimdışı da açılır.
+- Ana sayfada “kaldığın yerden devam et”, testlerde klavye kısayolları (A–D / 1–4, Enter).
 - Fiil çekimleri, kelime kartları, açıklamalı testler ve paragraf yazma alanı.
 - İlerleme, test sonuçları ve yazma taslakları yalnızca tarayıcıda saklanır. Sitenin harici bağlantısı veya izleme kodu yoktur.
 
@@ -25,6 +28,7 @@ Türkçe anlatımlı çalışma sitesi: [Siteyi aç](https://ysoktar.github.io/s
 | `conjugations.js` | Çekim motoru: 10 zamanın biçimleri (indefinido, imperfecto, futuro, condicional, subjuntivo, emirler…) ve düzensiz participiolar |
 | `lessons-detail.js` | Derslerin ayrıntılı anlatımı ve her derse bağlı defter/slayt notları |
 | `app.js`, `index.html`, `styles.css` | Arayüz |
+| `manifest.webmanifest`, `sw.js`, `icon-*.png` | Ana ekrana ekleme ve çevrimdışı önbellek |
 | `scripts/build.mjs` | `dist/` klasörünü üretir; veri dosyalarını tarayıcı için `data.js` olarak birleştirir |
 | `tests/site.test.mjs` | İçerik ve derleme testleri |
 
