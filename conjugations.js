@@ -30,7 +30,7 @@ const withPron=(lemma,forms)=>reflOf(lemma)?forms.map((f,i)=>RP[i]+' '+f):forms;
 // --- pretérito indefinido ---
 const INDEF_FULL={
  ser:['fui','fuiste','fue','fuimos','fuisteis','fueron'],ir:['fui','fuiste','fue','fuimos','fuisteis','fueron'],
- dar:['di','diste','dio','dimos','disteis','dieron'],ver:['vi','viste','vio','vimos','visteis','vieron']
+ dar:['di','diste','dio','dimos','disteis','dieron'],'reír':['reí','reíste','rio','reímos','reísteis','rieron'],ver:['vi','viste','vio','vimos','visteis','vieron']
 };
 const STRONG={estar:'estuv',tener:'tuv',hacer:'hic',poner:'pus',venir:'vin',decir:'dij',traer:'traj',saber:'sup',querer:'quis',poder:'pud',andar:'anduv',haber:'hub'};
 const STRONG_END=['e','iste','o','imos','isteis','ieron'];
@@ -40,14 +40,16 @@ function indefinido(v){
  if(STRONG[base]){const s=STRONG[base];return STRONG_END.map((e,i)=>{if(base==='hacer'&&i===2)return 'hizo';if(/j$/.test(s)&&i===5)return s+'eron';return s+e})}
  let f;
  if(t==='ar')f=['é','aste','ó','amos','asteis','aron'].map(e=>stem+e);
- else if(/[aeoáéó]$/.test(strip(stem))&&t!=='ar'){ // leer, oír, creer: i → y
+ else if(t==='ir'&&/[^gq]u$/.test(strip(stem))){ // huir, construir, incluir: i → y
+  f=[stem+'í',stem+'iste',stem+'yó',stem+'imos',stem+'isteis',stem+'yeron'];if(strip(base)==='huir')f[0]='hui';
+ } else if(/[aeoáéó]$/.test(strip(stem))&&t!=='ar'){ // leer, oír, creer: i → y
   const s=strip(stem);f=[s+'í',s+'íste',s+'yó',s+'ímos',s+'ísteis',s+'yeron'];
  } else f=['í','iste','ió','imos','isteis','ieron'].map(e=>stem+e);
  if(t==='ar'){ // yazım: -car/-gar/-zar yo
   if(/c$/.test(stem))f[0]=stem.slice(0,-1)+'qué';else if(/g$/.test(stem))f[0]=stem+'ué';else if(/z$/.test(stem))f[0]=stem.slice(0,-1)+'cé';
  }
  if(t==='ir'&&/(e→i|e→ie|o→ue)/.test(v.kind)){ // -ir kök değiştirenler: 3. şahıslarda e → i, o → u
-  const ch=s=>s.replace(/([eo])([^aeiou]*)$/,(m,vw,rest)=>(vw==='e'?'i':'u')+rest);
+  const ch=s=>s.replace(/([eo])([^aeiou]*u?)$/,(m,vw,rest)=>(vw==='e'?'i':'u')+rest);
   const s3=ch(stem);f[2]=s3+'ió';f[5]=s3+'ieron';
  }
  return f;
@@ -68,7 +70,7 @@ const futuro=v=>['é','ás','á','emos','éis','án'].map(e=>futStem(v)+e);
 const condicional=v=>['ía','ías','ía','íamos','íais','ían'].map(e=>futStem(v)+e);
 
 // --- presente de subjuntivo ---
-const SUBJ_FULL={ser:['sea','seas','sea','seamos','seáis','sean'],estar:['esté','estés','esté','estemos','estéis','estén'],ir:['vaya','vayas','vaya','vayamos','vayáis','vayan'],dar:['dé','des','dé','demos','deis','den'],saber:['sepa','sepas','sepa','sepamos','sepáis','sepan'],haber:['haya','hayas','haya','hayamos','hayáis','hayan']};
+const SUBJ_FULL={ser:['sea','seas','sea','seamos','seáis','sean'],estar:['esté','estés','esté','estemos','estéis','estén'],ir:['vaya','vayas','vaya','vayamos','vayáis','vayan'],dar:['dé','des','dé','demos','deis','den'],saber:['sepa','sepas','sepa','sepamos','sepáis','sepan'],haber:['haya','hayas','haya','hayamos','hayáis','hayan'],'reír':['ría','rías','ría','riamos','riáis','rían']};
 function subjuntivo(v){
  const base=baseOf(v.lemma),t=typeOf(base),stem=stemOf(base);
  if(SUBJ_FULL[base])return SUBJ_FULL[base].slice();
