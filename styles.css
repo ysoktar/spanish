@@ -110,3 +110,5 @@ td{white-space:normal}.conj-table td,.conj-table th,.conj-lite td,.conj-lite th{
 .g-toggle{align-self:center;margin-bottom:6px}
 @media(max-width:630px){.g-grid{grid-template-columns:1fr}.g-index{grid-template-columns:1fr 1fr;padding:12px}.g-card{padding:15px}}
 @media (max-width:630px){.g-toolbar{display:grid;grid-template-columns:1fr auto;gap:10px 12px;align-items:end}.g-toolbar .wide{grid-column:1/-1}.g-toolbar select{width:100%}.g-toolbar .g-toggle{white-space:nowrap;padding-bottom:12px}}
+
+.tense-tag{font-size:10px;padding:1px 6px;vertical-align:middle;margin-left:4px}.tense-lessons{margin:0 0 14px;padding:14px 16px}.tense-lesson-links{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:8px;margin-top:10px}.tense-lesson-links .outline-card{margin:0}

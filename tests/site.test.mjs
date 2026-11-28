@@ -38,7 +38,7 @@ test('curriculum covers 001 and all eight weeks of 002', async () => {
   const {lessons, verbs, vocabulary, questions, writingPrompts} = await import(dataPath);
   assert.ok(lessons.filter(x => x.course === '001').length >= 10);
   assert.ok(lessons.filter(x => x.course === '002').length >= 12);
-  for (const w of [1,2,3,4,5,6,7,8,10]) assert.ok(lessons.some(x => x.course === '002' && x.week === w), `002 week ${w}`);
+  for (const w of [1,2,3,4,5,6,7,8,9,10]) assert.ok(lessons.some(x => x.course === '002' && x.week === w), `002 week ${w}`);
   assert.ok(lessons.every(x => x.id && x.title && x.explain && x.examples?.length >= 2 && x.source && Array.isArray(x.pages)));
   assert.equal(new Set(lessons.map(x => x.id)).size, lessons.length);
   assert.ok(verbs.length >= 45);
@@ -72,7 +72,7 @@ test('slide notes cover all eight weeks of 002 and are well formed', async () =>
   const {notebook} = await import(notebookPath);
   const ids = [...slides, ...notebook].map(n => n.id);
   assert.equal(new Set(ids).size, ids.length);
-  for (const w of [1,2,3,4,5,6,7,8,10]) assert.ok(slides.some(n => n.week === w), `week ${w}`);
+  for (const w of [1,2,3,4,5,6,7,8,9,10]) assert.ok(slides.some(n => n.week === w), `week ${w}`);
   for (const n of slides) { assert.equal(n.course, '002'); checkBlocks(n); }
 });
 
