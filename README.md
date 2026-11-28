@@ -13,7 +13,7 @@ Türkçe anlatımlı çalışma sitesi: [Siteyi aç](https://ysoktar.github.io/s
 - **Hafta 9:** pretérito perfectonun kuruluşu (haber + participio, düzensiz participiolar, dönüşlüler), zaman belirteçleri, Lucía’nın günü ve diyalog; alıştırmaların cevapları.
 - **Hafta 10:** pretérito perfecto (ya / todavía no, Madrid), pretérito indefinido (düzenli, dönüşlü, zaman belirteçleri) ve düzensiz indefinido fiillerinin beş grubu; slayttaki alıştırmaların cevap anahtarı.
 - **Son konular (slayt bekleniyor):** nesne zamirleri, işaret sözcükleri, karşılaştırma ve üstünlük; genel dil bilgisine dayanır, slayt gelince güncellenecek.
-- **Fiil çekimleri:** kurs (001–004) ve çekim (10 zaman) seçimi; her çekimin hangi kursta öğretildiği etiketli (İSP 001–004) ve o çekimi anlatan derslere bağlantı; fiil kartında seçili fiilin bütün zamanları ve ilk geçtiği ders.
+- **Fiil çekimleri:** kurs (001–004) ve çekim (10 zaman) seçimi; her çekimin hangi kursta öğretildiği etiketli (İSP 001–004) ve o çekimi anlatan derslere bağlantı; kurs seçilince yalnızca o kursa kadar öğrenilen çekimler gösterilir; fiil kartında seçili fiilin bütün zamanları ve ilk geçtiği ders.
 - **Gramer kuralları:** bütün derslerin kuralları, sık yapılan hataları (✗ → ✓) ve ipuçları tek sayfada; arama, kurs filtresi ve konu dizini.
 - **Telefon:** alt gezinme çubuğu, üst çubukta sayfa adı ve arama, dar ekranda kart görünümüne geçen tablolar, kaydırma ipucu, yukarı dön düğmesi. Ana ekrana eklenebilir (PWA); açılan sayfalar çevrimdışı da açılır.
 - Ana sayfada “kaldığın yerden devam et”, testlerde klavye kısayolları (A–D / 1–4, Enter).
