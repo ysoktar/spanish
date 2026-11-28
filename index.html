@@ -2,12 +2,17 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="HOLA" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="theme-color" content="#f8f7f3" />
-  <meta name="description" content="İspanyolca 001 ve İspanyolca 002 derslerine Türkçe açıklamalı çalışma sitesi: konu anlatımları, fiil çekimleri, kelimeler, alıştırmalar ve metne aktarılmış ders defteri." />
-  <title>HOLA · İspanyolca 001 + 002 Çalışma Atlası</title>
+  <meta name="description" content="İspanyolca 001–004 (A1–A2) için Türkçe açıklamalı çalışma sitesi: konu anlatımları, fiil çekimleri, kelimeler, testler ve metne aktarılmış ders defteri." />
+  <title>HOLA · İspanyolca Atlası</title>
   <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+  <link rel="manifest" href="./manifest.webmanifest" />
   <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
@@ -22,6 +27,7 @@
         <a data-nav="home" href="#/home"><span>▦</span> Genel bakış</a>
         <a data-nav="courses" href="#/courses"><span>▤</span> Ders anlatımları</a>
         <a data-nav="verbs" href="#/verbs"><span>≡</span> Fiil çekimleri</a>
+        <a data-nav="grammar" href="#/grammar"><span>§</span> Gramer kuralları</a>
         <a data-nav="vocab" href="#/vocab"><span>◈</span> Kelime sözlüğü</a>
         <a data-nav="practice" href="#/practice"><span>◎</span> Test merkezi</a>
         <a data-nav="writing" href="#/writing"><span>✎</span> Yazma çalışması</a>
@@ -38,11 +44,19 @@
     </aside>
     <div class="mobile-backdrop" id="mobile-backdrop"></div>
     <div class="page-column">
-      <header class="topbar"><button id="open-menu" class="icon-btn menu-button" aria-label="Menüyü aç">☰</button><span class="topbar-subtitle">İSPANYOLCA 001–004 <span class="topbar-separator">/</span> A1–A2 ÇALIŞMA ALANI</span><div class="topbar-right"><span id="status-text" class="status-text">Hazır</span><button class="icon-btn theme-button" id="theme-toggle" title="Renk temasını değiştir" aria-label="Renk temasını değiştir">◐</button></div></header>
+      <header class="topbar"><button id="open-menu" class="icon-btn menu-button" aria-label="Menüyü aç">☰</button><span class="topbar-subtitle">İSPANYOLCA 001–004 <span class="topbar-separator">/</span> A1–A2 ÇALIŞMA ALANI</span><span class="topbar-title" id="topbar-title">HOLA</span><div class="topbar-right"><button class="icon-btn search-button" id="topbar-search" title="Ara" aria-label="Ara">⌕</button><span id="status-text" class="status-text">Hazır</span><button class="icon-btn theme-button" id="theme-toggle" title="Renk temasını değiştir" aria-label="Renk temasını değiştir">◐</button></div></header>
       <main id="app" tabindex="-1"><div class="loading">Dersler yükleniyor…</div></main>
-      <footer class="footer">Özgün Türkçe anlatımlar · Kaynak: kullanıcı notları, Nuevo Prisma A1 ve 002 haftalık sunumları · Sesli etkinlikler dahil değildir.</footer>
+      <footer class="footer">Özgün Türkçe anlatımlar · Kaynak: kullanıcı notları, Nuevo Prisma A1 ve 002 haftalık sunumları, Prisma A2 içindekiler listesi · Sesli etkinlikler dahil değildir.</footer>
     </div>
   </div>
+  <nav class="bottom-nav" aria-label="Hızlı gezinme">
+    <a data-tab="home" href="#/home"><span aria-hidden="true">▦</span>Ana sayfa</a>
+    <a data-tab="courses" href="#/courses"><span aria-hidden="true">▤</span>Dersler</a>
+    <a data-tab="verbs" href="#/verbs"><span aria-hidden="true">≡</span>Fiiller</a>
+    <a data-tab="practice" href="#/practice"><span aria-hidden="true">◎</span>Test</a>
+    <button type="button" id="open-menu-bottom" aria-label="Diğer bölümler ve ders haritası"><span aria-hidden="true">☰</span>Menü</button>
+  </nav>
+  <button type="button" class="to-top" id="to-top" aria-label="Sayfanın başına dön" title="Başa dön">↑</button>
   <script defer src="./data.js"></script>
   <script defer src="./app.js"></script>
 </body>

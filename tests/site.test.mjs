@@ -155,7 +155,9 @@ test('conjugation engine produces correct forms for every tense', async () => {
 
 test('interface has navigation, quiz, conjugations and notebook notes', () => {
   const html = readFileSync(htmlPath, 'utf8');
-  for (const label of ['İspanyolca 001', 'İspanyolca 002', 'Fiil çekimleri', 'Kelime', 'Test', 'Defter notları', 'Slayt notları', 'Yazma']) assert.ok(html.includes(label), label);
+  for (const label of ['İSPANYOLCA 001–004', 'Fiil çekimleri', 'Kelime', 'Test', 'Defter notları', 'Slayt notları', 'Yazma', 'class="bottom-nav"', 'manifest.webmanifest']) assert.ok(html.includes(label), label);
+  const manifest = JSON.parse(readFileSync(path.join(root, 'manifest.webmanifest'), 'utf8'));
+  for (const icon of manifest.icons) assert.ok(existsSync(path.join(root, icon.src)), icon.src);
   assert.ok(html.includes('id="app"'));
   assert.ok(html.includes('src="./data.js"'));
   assert.ok(!html.includes('http://') && !html.includes('https://'));
