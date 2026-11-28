@@ -5,12 +5,13 @@
 
 Türkçe anlatımlı çalışma sitesi: [Siteyi aç](https://ysoktar.github.io/spanish/).
 
-- Kronolojik konu anlatımları (001 temelleri, 002'nin 8 haftası): her derste adım adım anlatım, çekim tabloları, sık yapılan hatalar ve o konuya ait defter ve slayt örneklerinin tamamı.
+- Kronolojik konu anlatımları (001 temelleri, 002'nin 1–8. ve 10. haftaları): her derste adım adım anlatım, çekim tabloları, sık yapılan hatalar ve o konuya ait defter ve slayt örneklerinin tamamı.
 - **Defter notları:** ders defterinin 54 sayfası metne aktarıldı; kurallar, tablolar ve her cümlenin Türkçesi. Defterdeki hatalar düzeltildi ve “Dikkat” kutularında belirtildi. Fotoğraflar yayımlanmaz.
-- **Slayt notları:** “002 semana 1–8” sunumlarında olup defterde olmayan içerik: kültür kutuları (tapas, öğün saatleri), diyaloglar, ek fiil tabloları ve alıştırmaların cevap anahtarı.
+- **Slayt notları:** “002 semana 1–8 ve 10” sunumlarında olup defterde olmayan içerik: kültür kutuları (tapas, öğün saatleri), diyaloglar, ek fiil tabloları ve alıştırmaların cevap anahtarı.
 - **İSP 003 ve 004 (A2):** Prisma A2’nin 12 ünitesi; 003 = Ünite 1–6, 004 = Ünite 7–12. Konu sırası Edinumen’in yayımladığı Prisma A2 (Continúa) içindekiler listesinden alındı, anlatımlar genel dil bilgisine göre yazıldı; kitap metni yoktur. Slaytlar gelince güncellenecek.
 - **Kitap üniteleri:** Nuevo Prisma A1 (Edición ampliada) ve Prisma A2 ünite haritası, her ünitenin sitedeki dersleriyle. Kitabın metni yer almaz.
-- **Son konular (slayt bekleniyor):** pretérito perfecto, pretérito indefinido, nesne zamirleri, işaret sözcükleri, karşılaştırma ve üstünlük; genel dil bilgisine dayanır, slayt gelince güncellenecek.
+- **Hafta 10:** pretérito perfecto (ya / todavía no, Madrid), pretérito indefinido (düzenli, dönüşlü, zaman belirteçleri) ve düzensiz indefinido fiillerinin beş grubu; slayttaki alıştırmaların cevap anahtarı.
+- **Son konular (slayt bekleniyor):** nesne zamirleri, işaret sözcükleri, karşılaştırma ve üstünlük; genel dil bilgisine dayanır, slayt gelince güncellenecek.
 - **Fiil çekimleri:** kurs (001–004) ve çekim (10 zaman) seçimi; fiil kartında seçili fiilin bütün zamanları ve ilk geçtiği ders.
 - **Gramer kuralları:** bütün derslerin kuralları, sık yapılan hataları (✗ → ✓) ve ipuçları tek sayfada; arama, kurs filtresi ve konu dizini.
 - **Telefon:** alt gezinme çubuğu, üst çubukta sayfa adı ve arama, dar ekranda kart görünümüne geçen tablolar, kaydırma ipucu, yukarı dön düğmesi. Ana ekrana eklenebilir (PWA); açılan sayfalar çevrimdışı da açılır.
